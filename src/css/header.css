@@ -1,0 +1,30 @@
+.logo-img {
+    height: 100%;
+    width: 75%;
+}
+
+.font-12 {
+    font-size: .75rem;
+    color: black;
+}
+
+.primary-btn {
+    background-color: #517DB5;
+    border-radius: 10px;
+    transition: 0.25s ease;
+}
+
+.primary-btn:hover {
+    background-color: #396EB0;
+    box-shadow: 3px 2px 5px 1px rgba(57,110,176,0.35);
+}
+
+.secondary-btn {
+    border: 1px solid #517DB5;
+    border-radius: 10px;
+    transition: 0.25s ease;
+}
+
+.secondary-btn:hover {
+    box-shadow: 3px 2px 5px 1px rgba(81,125,181,0.35);;
+}
