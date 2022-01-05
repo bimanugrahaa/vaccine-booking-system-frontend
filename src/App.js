@@ -5,11 +5,12 @@ import 'bootstrap/dist/js/bootstrap.js'
 import Header from './users/components/header';
 import Login from './users/pages/login';
 import Register from './users/pages/register';
+import LoginAdmin from './admin/pages/login';
 
 function App() {
   return (
     <>
-    <Register/>
+    <LoginAdmin/>
     </>
   );
 }
