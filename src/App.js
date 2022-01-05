@@ -7,11 +7,12 @@ import Login from './users/pages/login';
 import Register from './users/pages/register';
 import LoginAdmin from './admin/pages/login';
 import Sidebar from './admin/components/sidebar';
+import FaskesList from './admin/components/faskesList';
 
 function App() {
   return (
     <>
-    <Sidebar/>
+    <FaskesList/>
     </>
   );
 }
