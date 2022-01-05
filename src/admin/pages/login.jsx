@@ -2,74 +2,42 @@ import logo from '../../assets/Logo.png'
 import axios from 'axios';
 import { useState } from 'react/cjs/react.development';
 
-export default function Login(params) {
-    
-    axios.get('http://localhost:8000/users', {
-        crossdomain: true
-    })
-        .then(function (response) {
-            // handle success
-            console.log(response);
-        })
-        .catch(function (error) {
-            // handle error
-            console.log(error);
-        })
-        .then(function () {
-            // always executed
-        });
+export default function Login() {
 
+    /* Base data login for admin */
     const baseAdmin = {
         email: "",
         password: ""
     }
 
+    /* useState for Login admin */
     const [admin, setAdmin] = useState(baseAdmin)
+    const [getError, setError] = useState("")
 
-    const handleInput = (e) => {
-        const name = e.target.name;
-        const value = e.target.value;
-
-        if (name === "user") {
-            // setErr({...err, [name]: err.fullName})
-            setAdmin({...admin, email: value})
-        }
-
-        if (name === "password") {
-            // setErr({...err, [name]: err.password})
-            setAdmin({...admin, [name]: value})
-        }
-    }
-
+    /* Login function => validate data to server */
     const login = async (e) => {
         e.preventDefault()
-        console.log("admin", admin)
 
         var config = {
             method: 'post',
             url: 'http://localhost:8000/login',
-            headers: { 
-              'Content-Type': 'application/json'
-            },
-            data : JSON.stringify(admin)
+            data : admin
         };
-        
-        axios(config)
-        .then(function (response) {
-        console.log(JSON.stringify(response.data));
-        })
-        .catch(function (error) {
-        console.log(error);
-        });
-        // await axios.post('http://localhost:8000/login', admin, {
-        //     crossdomain: true,
-        //     'Access-Control-Allow-Origin': true,
-        //     'Content-Type': 'application/json' 
-        // })
-        //     .then(response => console.log(response))
-        //     .catch(error => {
-        //         console.error('There was an error!', error);
-        //     });
+
+        await axios(config)
+            .then(response => {
+                console.log(response)
+            })
+            .catch((error) => {
+
+                const status = error.response.status;
+
+                if (status === 500) {
+                    setError("Data yang Anda masukan salah!")
+                }
+
+                console.error('There was an error!', error);
+            });
     }
 
     return (
@@ -78,7 +46,7 @@ export default function Login(params) {
             <div className="row">
                 <div className='col-md-5 p-0 img-fluid'>
                     <a href="/" className="d-flex align-items-center m-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-                        <img src={logo}/>
+                        <img src={logo} alt='vaccine-logo'/>
                     </a>
                 </div>
             </div>
@@ -89,25 +57,23 @@ export default function Login(params) {
                 <form onSubmit={login}>
                     <div class="mb-3">
                         <label for="user" class="form-label">User</label>
-                        <input name='user' type="text" class="form-control" id="user" aria-label="user" placeholder='User'
-                            value={admin.email} onChange={handleInput}/>
+                        <input name='email' type="text" class="form-control" id="user" aria-label="user" placeholder='User'
+                            value={admin.email} onChange={(e) => setAdmin({...admin, [e.target.name]: e.target.value})}/>
                     </div>
                     <div class="mb-1">
                         <label for="exampleInputPassword1" class="form-label">Kata sandi</label>
                         <input name='password' type="password" class="form-control" id="exampleInputPassword1" placeholder='Masukan kata sandi'
-                            value={admin.password} onChange={handleInput}/>
+                            value={admin.password} onChange={(e) => setAdmin({...admin, [e.target.name]: e.target.value})}/>
                     </div>
+                    <small className="text-danger">{getError}</small><br/>
                     <div className='text-center mt-3'>
                         <button type="submit" class="btn btn-primary text-uppercase">Masuk</button>
                     </div>  
                 </form>
-
             </div>
             <div className="col-md-4 col-2"></div>
             </div>
         </div>
-        
-        
         </>
     )
 }
