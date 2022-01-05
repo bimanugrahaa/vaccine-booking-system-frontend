@@ -6,11 +6,12 @@ import Header from './users/components/header';
 import Login from './users/pages/login';
 import Register from './users/pages/register';
 import LoginAdmin from './admin/pages/login';
+import Sidebar from './admin/components/sidebar';
 
 function App() {
   return (
     <>
-    <LoginAdmin/>
+    <Sidebar/>
     </>
   );
 }
