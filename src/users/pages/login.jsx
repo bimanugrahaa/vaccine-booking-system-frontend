@@ -1,4 +1,4 @@
-import login_img from '../assets/vaccine-one.png'
+import login_img from '../../assets/vaccine-one.png'
 
 export default function Login() {
     

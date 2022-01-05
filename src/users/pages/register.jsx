@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useState } from 'react';
-import logo from '../assets/Logo.png'
-import login_img from '../assets/vaccine-one.png'
+import logo from '../../assets/Logo.png'
+import login_img from '../../assets/vaccine-one.png'
 
 export default function Register() {
     const axios = require('axios');
