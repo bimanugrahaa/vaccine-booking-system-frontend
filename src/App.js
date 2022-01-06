@@ -10,11 +10,12 @@ import Sidebar from './admin/components/sidebar';
 import FaskesList from './admin/components/faskesList';
 import VaccineList from './admin/components/vaccineList';
 import UsersList from './admin/components/usersList';
+import Faskes from './admin/pages/faskes';
 
 function App() {
   return (
     <>
-    <UsersList/>
+    <Faskes/>
     </>
   );
 }
