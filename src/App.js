@@ -11,11 +11,12 @@ import FaskesList from './admin/components/faskesList';
 import VaccineList from './admin/components/vaccineList';
 import UsersList from './admin/components/usersList';
 import Faskes from './admin/pages/faskes';
+import FaskesDetail from './admin/pages/faskesDetail';
 
 function App() {
   return (
     <>
-    <Faskes/>
+    <FaskesDetail/>
     </>
   );
 }

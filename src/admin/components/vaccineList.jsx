@@ -3,7 +3,7 @@ export default function VaccineList() {
     
 
     return (
-        <div className="mx-5">
+        <div>
         <div className="container-fluid py-1 card">
             <div className="row">
                 <div className="col-md-3 text-end">
@@ -17,7 +17,7 @@ export default function VaccineList() {
                     <p className="mb-1">Kuota: 100</p>
                     <p className="mb-1">Sisa Kuota: 10</p>
                 </div>
-                <div className="col-md-1 align-self-center text-center">
+                <div className="col-md-2 d-grid align-self-center text-center">
                     <button className="btn btn-primary">Edit</button>
                 </div>
             </div>
