@@ -4,7 +4,7 @@ export default function VaccineList() {
 
     return (
         <div>
-        <div className="container-fluid py-1 card">
+        <div className="container-fluid mt-2 py-1 card">
             <div className="row">
                 <div className="col-md-3 text-end">
                     <p className="mb-1"><span className="fw-bold">Tanggal</span> 12-21-2021</p>

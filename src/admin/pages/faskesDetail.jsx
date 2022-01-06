@@ -39,6 +39,7 @@ export default function FaskesDetail() {
                 </div>
                 <div className='row mt-3'>
                     <VaccineList/>
+                    <VaccineList/>
                 </div>
             </div>
         </div>
