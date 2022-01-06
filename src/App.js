@@ -9,11 +9,12 @@ import LoginAdmin from './admin/pages/login';
 import Sidebar from './admin/components/sidebar';
 import FaskesList from './admin/components/faskesList';
 import VaccineList from './admin/components/vaccineList';
+import UsersList from './admin/components/usersList';
 
 function App() {
   return (
     <>
-    <VaccineList/>
+    <UsersList/>
     </>
   );
 }
