@@ -1,8 +1,59 @@
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 import logo from '../../assets/Logo.png'
 import Sidebar from '../components/sidebar'
 
 export default function AddFaskes() {
     
+    const [provinsi, getProvinsi] = useState([])
+    const [provinsiID, setProvinsiID] = useState([])
+    const [kota, getKota] = useState([])
+    const [kotaID, setKotaID] = useState([])
+    const [kecamatan, getKecamatan] = useState([])
+    const [kecamatanID, setKecamatanID] = useState([])
+    const [kelurahan, getKelurahan] = useState([])
+    const [kelurahanID, setKelurahanID] = useState([])
+
+    const baseURLDaerah = "https://dev.farizdotid.com/api/daerahindonesia"
+
+    const fetchProvinsi = async() => {
+        await axios.get(`${baseURLDaerah}/provinsi`)
+        .then(response => {
+            getProvinsi(response)
+        })
+        .catch(err => console.log("error found on fetchProvinsi", err))
+    }
+
+    const fetchKota = async () => {
+        await axios.get(`${baseURLDaerah}/kota?id_provinsi=${provinsiID}`)
+        .then(response => {
+            getKota(response)
+            console.log(response)})
+        .catch(err => console.log("error found on fetchKota", err))
+    }
+
+    const fetchKecamatan = async () => {
+        await axios.get(`${baseURLDaerah}/kecamatan?id_kota=${kotaID}`)
+        .then(response => {
+            getKecamatan(response)
+            console.log(response)})
+        .catch(err => console.log("error found on fetchKecamatan", err))
+    }
+
+    const fetchKelurahan = async () => {
+        await axios.get(`${baseURLDaerah}/kelurahan?id_kecamatan=${kecamatanID}`)
+        .then(response => {
+            getKelurahan(response)
+            console.log(response)})
+        .catch(err => console.log("error found on fetchKelurahan", err))
+    }
+
+    useEffect(() => {
+        fetchProvinsi()
+        fetchKota()
+        fetchKecamatan()
+        fetchKelurahan()
+    }, [provinsiID, kotaID, kecamatanID, kelurahanID])
 
     return (
         <>
@@ -27,41 +78,45 @@ export default function AddFaskes() {
                 </div>
                 <div className='row mt-3'>
                 <form>
-                    <div class="mb-3">
-                        <label for="faskesName" class="form-label">Nama faskes</label>
-                        <input name='faskesName' type="text" class="form-control" id="faskesName" aria-label="faskesName" placeholder='Nama faskes'/>
+                    <div className="mb-3">
+                        <label for="faskesName" className="form-label">Nama faskes</label>
+                        <input name='faskesName' type="text" className="form-control" id="faskesName" aria-label="faskesName" placeholder='Nama faskes'/>
                     </div>
-                    <div class="mb-3">
-                        <label for="adress" class="form-label">Alamat</label>
-                        <textarea name='address' class="form-control" id="adress" rows="3"></textarea>
+                    <div className="mb-3">
+                        <label for="adress" className="form-label">Alamat</label>
+                        <textarea name='address' className="form-control" id="adress" rows="3"></textarea>
                     </div>
-                    <label for="Provinsi" class="form-label">Provinsi</label>
-                    <select class="form-select mb-3" aria-label=".form-select-sm example">
+                    <label for="Provinsi" className="form-label">Provinsi</label>
+                    <select onChange={(e) => setProvinsiID(e.target.value)} name='provinsi' className="form-select mb-3" aria-label=".form-select-sm example">
                         <option selected disabled>Pilih provinsi</option>
-                        <option value="1">Sudah vaksin</option>
-                        <option value="2">Expired</option>
+                        {provinsi?.data?.provinsi?.map((prov) => 
+                            <option value={prov.id}>{prov.nama}</option>
+                        )}
                     </select>
-                    <label for="Kota/Kabupaten" class="form-label">Kota/Kabupaten</label>
-                    <select class="form-select mb-3" aria-label=".form-select-sm example">
+                    <label for="Kota/Kabupaten" className="form-label">Kota/Kabupaten</label>
+                    <select onChange={(e) => setKotaID(e.target.value)} name='kota' className="form-select mb-3" aria-label=".form-select-sm example">
                         <option selected disabled>Pilih kota/kabupaten</option>
-                        <option value="1">Sudah vaksin</option>
-                        <option value="2">Expired</option>
+                        {kota?.data?.kota_kabupaten?.map((kota) => 
+                            <option value={kota.id}>{kota.nama}</option>
+                        )}
                     </select>
-                    <label for="Kecamatan" class="form-label">Kecamatan</label>
-                    <select class="form-select mb-3" aria-label=".form-select-sm example">
+                    <label for="Kecamatan" className="form-label">Kecamatan</label>
+                    <select onChange={(e) => setKecamatanID(e.target.value)} name='kecamatan' className="form-select mb-3" aria-label=".form-select-sm example">
                         <option selected disabled>Pilih kecamatan</option>
-                        <option value="1">Sudah vaksin</option>
-                        <option value="2">Expired</option>
+                        {kecamatan?.data?.kecamatan?.map((kec) => 
+                            <option value={kec.id}>{kec.nama}</option>
+                        )}
                     </select>
-                    <label for="Kelurahan" class="form-label">Kelurahan</label>
-                    <select class="form-select mb-3" aria-label=".form-select-sm example">
+                    <label for="Kelurahan" className="form-label">Kelurahan</label>
+                    <select onChange={(e) => setKelurahanID(e.target.value)} name='kelurahan' className="form-select mb-3" aria-label=".form-select-sm example">
                         <option selected disabled>Pilih kelurahan</option>
-                        <option value="1">Sudah vaksin</option>
-                        <option value="2">Expired</option>
+                        {kelurahan?.data?.kelurahan?.map((kel) => 
+                            <option value={kel.id}>{kel.nama}</option>
+                        )}
                     </select>
                     {/* <small className="text-danger">{getError}</small><br/> */}
                     <div className='mt-3'>
-                        <button type="submit" class="btn btn-primary text-uppercase">Simpan</button>
+                        <button type="submit" className="btn btn-primary text-uppercase">Simpan</button>
                     </div>  
                 </form>
                 </div>
