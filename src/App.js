@@ -13,11 +13,12 @@ import UsersList from './admin/components/usersList';
 import Faskes from './admin/pages/faskes';
 import FaskesDetail from './admin/pages/faskesDetail';
 import AddFaskes from './admin/pages/addFaskes';
+import AddVaccine from './admin/pages/addVaccine';
 
 function App() {
   return (
     <>
-    <AddFaskes/>
+    <AddVaccine/>
     </>
   );
 }
