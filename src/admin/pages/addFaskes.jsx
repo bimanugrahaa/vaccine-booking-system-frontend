@@ -5,14 +5,24 @@ import Sidebar from '../components/sidebar'
 
 export default function AddFaskes() {
     
+    const baseDataFaskes = {
+        name: "",
+        address: "",
+        provinsi: "",
+        kota: "",
+        kecamatan: "",
+        kelurahan: ""
+    }
+
+    const [dataFaskes, setDataFaskes] = useState(baseDataFaskes)
+
     const [provinsi, getProvinsi] = useState([])
-    const [provinsiID, setProvinsiID] = useState([])
+    const [provinsiID, setProvinsiID] = useState(0)
     const [kota, getKota] = useState([])
-    const [kotaID, setKotaID] = useState([])
+    const [kotaID, setKotaID] = useState(0)
     const [kecamatan, getKecamatan] = useState([])
-    const [kecamatanID, setKecamatanID] = useState([])
+    const [kecamatanID, setKecamatanID] = useState(0)
     const [kelurahan, getKelurahan] = useState([])
-    const [kelurahanID, setKelurahanID] = useState([])
 
     const baseURLDaerah = "https://dev.farizdotid.com/api/daerahindonesia"
 
@@ -50,10 +60,25 @@ export default function AddFaskes() {
 
     useEffect(() => {
         fetchProvinsi()
+    }, [])
+
+    useEffect(() => {
         fetchKota()
+    }, [provinsiID])
+
+    useEffect(() => {
         fetchKecamatan()
+    }, [kotaID])
+
+    useEffect(() => {
         fetchKelurahan()
-    }, [provinsiID, kotaID, kecamatanID, kelurahanID])
+    }, [kecamatanID])
+
+    const submit = (e) => {
+        e.preventDefault()
+
+        console.log("dataFaskes", dataFaskes)
+    }
 
     return (
         <>
@@ -68,50 +93,61 @@ export default function AddFaskes() {
             <div className='col-lg-3'>
                 <Sidebar/>
             </div>
-            <div className='col-lg-1'></div>
-            <div className='col-lg-8 mt-3'>
+            <div className='col-lg-auto pe-5'></div>
+            <div className='col-lg-8 pe-0 mt-3'>
+                <i class="fas fa-chevron-left m-2"><a className='ps-3 text-decoration-none text-uppercase' href="#">Kembali</a></i>
                 <div className='row'>
                     <h4 className='fw-bold text-uppercase text-center p-0'>Fasilitas Kesehatan Vaksinasi Covid-19</h4>
                 </div>
                 <div className='row mt-3'>
-                    <h6 className='fw-bold'>Info Detail Faskes</h6>
+                    <h5 className='fw-bold'>Info Detail Faskes</h5>
                 </div>
                 <div className='row mt-3'>
-                <form>
+                <form onSubmit={submit}>
                     <div className="mb-3">
-                        <label for="faskesName" className="form-label">Nama faskes</label>
-                        <input name='faskesName' type="text" className="form-control" id="faskesName" aria-label="faskesName" placeholder='Nama faskes'/>
+                        <label htmlFor="name" className="form-label">Nama faskes</label>
+                        <input value={dataFaskes.name} onChange={(e) => setDataFaskes({...dataFaskes, [e.target.name]: e.target.value})} name='name' type="text" className="form-control" id="name" aria-label="name" placeholder='Nama faskes'/>
                     </div>
                     <div className="mb-3">
-                        <label for="adress" className="form-label">Alamat</label>
-                        <textarea name='address' className="form-control" id="adress" rows="3"></textarea>
+                        <label htmlFor="adress" className="form-label">Alamat</label>
+                        <textarea value={dataFaskes.address} onChange={(e) => setDataFaskes({...dataFaskes, [e.target.name]: e.target.value})} name='address' className="form-control" id="adress" rows="3"></textarea>
                     </div>
-                    <label for="Provinsi" className="form-label">Provinsi</label>
-                    <select onChange={(e) => setProvinsiID(e.target.value)} name='provinsi' className="form-select mb-3" aria-label=".form-select-sm example">
+                    <label htmlFor="Provinsi" className="form-label">Provinsi</label>
+                    <select onChange={(e) => {
+                        setProvinsiID(e.target[e.target.selectedIndex].dataset.id)
+                        setDataFaskes({...dataFaskes, [e.target.name]: e.target.value})}} 
+                        name='provinsi' className="form-select mb-3" aria-label=".form-select-sm example" required>
                         <option selected disabled>Pilih provinsi</option>
                         {provinsi?.data?.provinsi?.map((prov) => 
-                            <option value={prov.id}>{prov.nama}</option>
-                        )}
+                            <option data-id={prov.id} key={prov.id} value={prov.nama}>{prov.nama}</option>
+                            )}
                     </select>
-                    <label for="Kota/Kabupaten" className="form-label">Kota/Kabupaten</label>
-                    <select onChange={(e) => setKotaID(e.target.value)} name='kota' className="form-select mb-3" aria-label=".form-select-sm example">
+                    <label htmlFor="Kota/Kabupaten" className="form-label">Kota/Kabupaten</label>
+                    <select onChange={(e) => {
+                        setKotaID(e.target[e.target.selectedIndex].dataset.id)
+                        setDataFaskes({...dataFaskes, [e.target.name]: e.target.value})}} 
+                        name='kota' className="form-select mb-3" aria-label=".form-select-sm example">
                         <option selected disabled>Pilih kota/kabupaten</option>
                         {kota?.data?.kota_kabupaten?.map((kota) => 
-                            <option value={kota.id}>{kota.nama}</option>
+                            <option data-id={kota.id} key={kota.id} value={kota.nama}>{kota.nama}</option>
                         )}
                     </select>
-                    <label for="Kecamatan" className="form-label">Kecamatan</label>
-                    <select onChange={(e) => setKecamatanID(e.target.value)} name='kecamatan' className="form-select mb-3" aria-label=".form-select-sm example">
+                    <label htmlFor="Kecamatan" className="form-label">Kecamatan</label>
+                    <select onChange={(e) => {
+                        setKecamatanID(e.target[e.target.selectedIndex].dataset.id)
+                        setDataFaskes({...dataFaskes, [e.target.name]: e.target.value})}} 
+                        name='kecamatan' className="form-select mb-3" aria-label=".form-select-sm example">
                         <option selected disabled>Pilih kecamatan</option>
                         {kecamatan?.data?.kecamatan?.map((kec) => 
-                            <option value={kec.id}>{kec.nama}</option>
+                            <option data-id={kec.id} key={kec.id} value={kec.nama}>{kec.nama}</option>
                         )}
                     </select>
-                    <label for="Kelurahan" className="form-label">Kelurahan</label>
-                    <select onChange={(e) => setKelurahanID(e.target.value)} name='kelurahan' className="form-select mb-3" aria-label=".form-select-sm example">
+                    <label htmlFor="Kelurahan" className="form-label">Kelurahan</label>
+                    <select onChange={(e) => {
+                        setDataFaskes({...dataFaskes, [e.target.name]: e.target.value})}} name='kelurahan' className="form-select mb-3" aria-label=".form-select-sm example">
                         <option selected disabled>Pilih kelurahan</option>
                         {kelurahan?.data?.kelurahan?.map((kel) => 
-                            <option value={kel.id}>{kel.nama}</option>
+                            <option data-id={kel.id} key={kel.id} value={kel.nama}>{kel.nama}</option>
                         )}
                     </select>
                     {/* <small className="text-danger">{getError}</small><br/> */}
