@@ -18,7 +18,7 @@ import AddVaccine from './admin/pages/addVaccine';
 function App() {
   return (
     <>
-    <AddVaccine/>
+    <LoginAdmin/>
     </>
   );
 }

@@ -6,7 +6,7 @@ export default function Login() {
 
     /* Base data login for admin */
     const baseAdmin = {
-        email: "",
+        username: "",
         password: ""
     }
 
@@ -20,7 +20,7 @@ export default function Login() {
 
         var config = {
             method: 'post',
-            url: 'http://localhost:8000/login',
+            url: 'http://localhost:8000/admin/login',
             data : admin
         };
 
@@ -57,8 +57,8 @@ export default function Login() {
                 <form onSubmit={login}>
                     <div class="mb-3">
                         <label for="user" class="form-label">User</label>
-                        <input name='email' type="text" class="form-control" id="user" aria-label="user" placeholder='User'
-                            value={admin.email} onChange={(e) => setAdmin({...admin, [e.target.name]: e.target.value})}/>
+                        <input name='username' type="text" class="form-control" id="user" aria-label="user" placeholder='User'
+                            value={admin.username} onChange={(e) => setAdmin({...admin, [e.target.name]: e.target.value})}/>
                     </div>
                     <div class="mb-1">
                         <label for="exampleInputPassword1" class="form-label">Kata sandi</label>
