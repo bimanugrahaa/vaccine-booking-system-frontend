@@ -1,9 +1,20 @@
 import { useEffect, useState } from 'react';
 import logo from '../../assets/Logo.png'
 import Sidebar from '../components/sidebar'
+import 'react-modern-calendar-datepicker/lib/DatePicker.css';
+import 'react-next-dates/dist/style.css';
+import DatePicker from 'react-modern-calendar-datepicker';
+import { TimePicker } from 'react-next-dates';
+import { DateToString, LongDate } from '../../utils/dateToString';
 
 export default function AddVaccine() {
     
+    const [selectedDay, setSelectedDay] = useState(null);
+    const [selectedTime, setDate] = useState(null);
+
+    // console.log(DateToString(selectedDay))
+    // console.log(LongDate(DateToString(selectedDay)))
+    console.log(selectedTime)
     return (
         <>
         <div className="row">
@@ -51,13 +62,32 @@ export default function AddVaccine() {
                     </div>
                     <div className='row'>
                         <div className="col-lg-5 mb-3">
+                            
                             <label htmlFor="date" className="form-label">Tanggal pelaksanaan</label>
-                            <input value={""} onChange={""} name='date' type="date" className="form-control" id="date" aria-label="date" placeholder='Tanggal pelaksanaan'/>
+                            <div className='row'>
+                                <DatePicker inputClassName="form-control bg-white w-100 fs-6 text-start rounded" 
+                                    value={selectedDay} onChange={setSelectedDay} inputPlaceholder="Tanggal pelaksanaan" 
+                                    calendarClassName="responsive-calendar"
+                                    shouldHighlightWeekends />
+                            </div>
+                            {/* <input value={""} onChange={""} name='date' type="date" className="form-control" id="date" aria-label="date" placeholder='Tanggal pelaksanaan'/> */}
                         </div>
                         <div className='col-lg-1'></div>
                         <div className="col-lg-5 mb-3">
                             <label htmlFor="time" className="form-label">Jam pelaksanaan</label>
-                            <input value={""} onChange={""} name='time' type="time" className="form-control" id="time" aria-label="time" placeholder='Jam pelaksanaan'/>
+                            <div className='row'>
+                                <div className='col-lg-5'>
+                                <TimePicker date={selectedTime} onChange={setDate} portalContainer={document.body}>
+                                    {({inputProps}) => <input className='form-control rounded' {...inputProps} />}
+                                </TimePicker>
+                                </div>
+                                <div className='col-lg-auto d-flex align-items-center'>—</div>
+                                <div className='col-lg-5'>
+                                <TimePicker date={selectedTime} onChange={setDate} portalContainer={document.body}>
+                                    {({inputProps}) => <input className='form-control rounded' {...inputProps} />}
+                                </TimePicker>
+                                </div>
+                            </div>                            
                         </div>
                     </div>
                     
