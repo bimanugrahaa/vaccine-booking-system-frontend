@@ -2,6 +2,7 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.js'
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Header from './users/components/header';
 import Login from './users/pages/login';
 import Register from './users/pages/register';
@@ -17,9 +18,14 @@ import AddVaccine from './admin/pages/addVaccine';
 
 function App() {
   return (
-    <>
-    <LoginAdmin/>
-    </>
+    <BrowserRouter>
+          <Routes>
+            <Route path="/admin/login" exact element={<LoginAdmin/>}/>
+            <Route path="/admin/faskes-list" exact element={<FaskesDetail/>}/>
+            <Route path="/admin/user-vaccine" exact element={<UsersList/>}/>
+            <Route path="/dev" element={<AddVaccine/>}/>
+          </Routes>
+        </BrowserRouter>
   );
 }
 

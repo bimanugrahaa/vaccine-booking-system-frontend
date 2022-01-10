@@ -6,15 +6,41 @@ import 'react-next-dates/dist/style.css';
 import DatePicker from 'react-modern-calendar-datepicker';
 import { TimePicker } from 'react-next-dates';
 import { DateToString, LongDate } from '../../utils/dateToString';
+import { Calendar } from '../../utils/calendar';
+import TimeToString from '../../utils/timeToString';
 
 export default function AddVaccine() {
     
-    const [selectedDay, setSelectedDay] = useState(null);
-    const [selectedTime, setDate] = useState(null);
+    const baseDataVaccine = {
+        name: "",
+        stock: "",
+        vaccineDate: "",
+        startTime: "",
+        endTime: ""
+    }
 
-    // console.log(DateToString(selectedDay))
-    // console.log(LongDate(DateToString(selectedDay)))
-    console.log(selectedTime)
+    const [dataVaccine, setDataVaccine] = useState(baseDataVaccine)
+
+    const [selectedDay, setSelectedDay] = useState("");
+    const [selectedTimeStart, setTimeStart] = useState(null);
+    const [selectedTimeEnd, setTimeEnd] = useState(null);
+
+    const Submit = (e) => {
+        e.preventDefault()
+
+        const submit = {
+            ...dataVaccine
+        }
+
+        const dateToString = DateToString(selectedDay)
+        submit.vaccineDate = dateToString
+
+        if (selectedTimeStart && selectedTimeEnd !== null) {
+            submit.startTime = TimeToString(selectedTimeStart.toString())
+            submit.endTime = TimeToString(selectedTimeEnd.toString())
+        }
+    }
+
     return (
         <>
         <div className="row">
@@ -48,26 +74,25 @@ export default function AddVaccine() {
                     <h5 className='fw-bold'>Jadwal Vaksin</h5>
                 </div>
                 <div className='row mt-3'>
-                <form>
+                <form onSubmit={Submit}>
                     <div className='row'>
                         <div className="col-lg-5 mb-3">
                             <label htmlFor="name" className="form-label">Jenis vaksin</label>
-                            <input value={""} onChange={""} name='name' type="text" className="form-control" id="name" aria-label="name" placeholder='Jenis vaksin'/>
+                            <input value={dataVaccine.name} onChange={(e) => setDataVaccine({...dataVaccine, [e.target.name]: e.target.value})} name='name' type="text" className="form-control" id="name" aria-label="name" placeholder='Jenis vaksin'/>
                         </div>
                         <div className='col-lg-1'></div>
                         <div className="col-lg-5 mb-3">
                             <label htmlFor="stock" className="form-label">Stok vaksin</label>
-                            <input value={""} onChange={""} name='stock' type="text" className="form-control" id="stock" aria-label="stock" placeholder='Stok vaksin'/>
+                            <input value={dataVaccine.stock} onChange={(e) => setDataVaccine({...dataVaccine, [e.target.name]: e.target.value})} name='stock' type="text" className="form-control" id="stock" aria-label="stock" placeholder='Stok vaksin'/>
                         </div>
                     </div>
                     <div className='row'>
                         <div className="col-lg-5 mb-3">
-                            
                             <label htmlFor="date" className="form-label">Tanggal pelaksanaan</label>
                             <div className='row'>
                                 <DatePicker inputClassName="form-control bg-white w-100 fs-6 text-start rounded" 
                                     value={selectedDay} onChange={setSelectedDay} inputPlaceholder="Tanggal pelaksanaan" 
-                                    calendarClassName="responsive-calendar"
+                                    calendarClassName="responsive-calendar" locale={Calendar}
                                     shouldHighlightWeekends />
                             </div>
                             {/* <input value={""} onChange={""} name='date' type="date" className="form-control" id="date" aria-label="date" placeholder='Tanggal pelaksanaan'/> */}
@@ -77,13 +102,13 @@ export default function AddVaccine() {
                             <label htmlFor="time" className="form-label">Jam pelaksanaan</label>
                             <div className='row'>
                                 <div className='col-lg-5'>
-                                <TimePicker date={selectedTime} onChange={setDate} portalContainer={document.body}>
+                                <TimePicker date={selectedTimeStart} onChange={setTimeStart} portalContainer={document.body}>
                                     {({inputProps}) => <input className='form-control rounded' {...inputProps} />}
                                 </TimePicker>
                                 </div>
                                 <div className='col-lg-auto d-flex align-items-center'>—</div>
                                 <div className='col-lg-5'>
-                                <TimePicker date={selectedTime} onChange={setDate} portalContainer={document.body}>
+                                <TimePicker date={selectedTimeEnd} onChange={setTimeEnd} portalContainer={document.body}>
                                     {({inputProps}) => <input className='form-control rounded' {...inputProps} />}
                                 </TimePicker>
                                 </div>

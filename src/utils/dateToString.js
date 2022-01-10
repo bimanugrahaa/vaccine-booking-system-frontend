@@ -1,13 +1,13 @@
 function DateToString(date) {
     
-    const stringDate = `${date.day} - ${date.month} - ${date.year}`
+    const stringDate = `${date.day}-${date.month}-${date.year}`
 
     return stringDate
 }
 
 function LongDate(date) {
     
-    let longDate = date.split(" - ")
+    let longDate = date.split("-")
 
     const months = [
         '',
