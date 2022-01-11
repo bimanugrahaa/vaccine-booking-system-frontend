@@ -1,0 +1,11 @@
+.hero {
+    background: url(../../assets/landing-img.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 475px;
+}
+
+.hero-text {
+    text-shadow: 5px 0px 15px rgba(150, 150, 150, 1);
+}
