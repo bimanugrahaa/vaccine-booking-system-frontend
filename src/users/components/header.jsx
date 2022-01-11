@@ -6,7 +6,7 @@ export default function Header() {
     return (
         <>
             <div className="container-fluid p-0">
-                <header className="d-flex flex-wrap justify-content-center py-3 border-bottom">
+                <header className="d-flex flex-wrap justify-content-center py-3 shadow">
                     <a href="/" className="d-flex align-items-center ms-3 mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
                         <img src={logo}/>
                     </a>

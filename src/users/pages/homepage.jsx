@@ -1,6 +1,7 @@
 import Header from '../components/header';
 import Hero from '../components/hero';
 import about from '../../assets/about-img.png'
+import SearchBarFaskes from '../components/searchBarFaskes';
 
 export default function Homepage() {
     
@@ -8,11 +9,7 @@ export default function Homepage() {
         <>
         <Header/>
         <Hero/>
-        <div className='card shadow bg-light bg-gradient border-0 text-center p-3 m-5'>
-            <h4 className='text-uppercase fw-bold mb-3'>Cari fasilitas kesehatan!</h4>
-            <input className='form-control' type="text" placeholder='Rumah sakit ceria'/>
-            <button className='btn btn-primary text-uppercase m-auto mt-3'>Cari</button>
-        </div>
+        <SearchBarFaskes/>
         <h6 className='ms-5 fw-bold'>Tentang</h6>
         <div className='row'>
             <div className='col-lg-1'></div>

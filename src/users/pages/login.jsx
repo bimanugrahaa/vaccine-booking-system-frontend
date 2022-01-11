@@ -27,7 +27,7 @@ export default function Login() {
                             </div>       
                         </form>   
                     </div>
-                    <h6 className='text-center m-5'>Belum punya akun? <a className='stretched-link'>Buat akun</a></h6>
+                    <h6 className='text-center m-5'>Belum punya akun? <a href='#'>Buat akun</a></h6>
                 </div>
                 
                 
