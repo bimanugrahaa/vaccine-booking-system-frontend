@@ -28,7 +28,7 @@ function App() {
             <Route path="/admin/login" exact element={<LoginAdmin/>}/>
             <Route path="/admin/faskes-list" exact element={<FaskesDetail/>}/>
             <Route path="/admin/user-vaccine" exact element={<UsersList/>}/>
-            <Route path="/dev" element={<FaskesReview/>}/>
+            <Route path="/dev" element={<AddFaskes/>}/>
           </Routes>
         </BrowserRouter>
   );

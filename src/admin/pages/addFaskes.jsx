@@ -6,8 +6,8 @@ import Sidebar from '../components/sidebar'
 export default function AddFaskes() {
     
     const baseDataFaskes = {
-        name: "",
-        address: "",
+        nama: "",
+        alamat: "",
         provinsi: "",
         kota: "",
         kecamatan: "",
@@ -15,6 +15,7 @@ export default function AddFaskes() {
     }
 
     const [dataFaskes, setDataFaskes] = useState(baseDataFaskes)
+    const [getError, setError] = useState("")
 
     const [provinsi, getProvinsi] = useState([])
     const [provinsiID, setProvinsiID] = useState(0)
@@ -74,10 +75,30 @@ export default function AddFaskes() {
         fetchKelurahan()
     }, [kecamatanID])
 
-    const submit = (e) => {
+    const submit = async(e) => {
         e.preventDefault()
 
         console.log("dataFaskes", dataFaskes)
+        var config = {
+            method: 'post',
+            url: 'http://localhost:8000/faskes',
+            data : dataFaskes
+        };
+
+        await axios(config)
+            .then(response => {
+                console.log(response)
+            })
+            .catch((error) => {
+
+                const status = error.response.status;
+
+                if (status === 500) {
+                    setError("Data yang Anda masukan salah!")
+                }
+
+                console.error('There was an error!', error);
+            });
     }
 
     return (
@@ -105,12 +126,12 @@ export default function AddFaskes() {
                 <div className='row mt-3'>
                 <form onSubmit={submit}>
                     <div className="mb-3">
-                        <label htmlFor="name" className="form-label">Nama faskes</label>
-                        <input value={dataFaskes.name} onChange={(e) => setDataFaskes({...dataFaskes, [e.target.name]: e.target.value})} name='name' type="text" className="form-control" id="name" aria-label="name" placeholder='Nama faskes'/>
+                        <label htmlFor="nama" className="form-label">Nama faskes</label>
+                        <input value={dataFaskes.nama} onChange={(e) => setDataFaskes({...dataFaskes, [e.target.name]: e.target.value})} name='nama' type="text" className="form-control" id="nama" aria-label="nama" placeholder='Nama faskes'/>
                     </div>
                     <div className="mb-3">
-                        <label htmlFor="adress" className="form-label">Alamat</label>
-                        <textarea value={dataFaskes.address} onChange={(e) => setDataFaskes({...dataFaskes, [e.target.name]: e.target.value})} name='address' className="form-control" id="adress" rows="3"></textarea>
+                        <label htmlFor="alamat" className="form-label">Alamat</label>
+                        <textarea value={dataFaskes.alamat} onChange={(e) => setDataFaskes({...dataFaskes, [e.target.name]: e.target.value})} name='alamat' className="form-control" id="adress" rows="3"></textarea>
                     </div>
                     <label htmlFor="Provinsi" className="form-label">Provinsi</label>
                     <select onChange={(e) => {
@@ -150,7 +171,7 @@ export default function AddFaskes() {
                             <option data-id={kel.id} key={kel.id} value={kel.nama}>{kel.nama}</option>
                         )}
                     </select>
-                    {/* <small className="text-danger">{getError}</small><br/> */}
+                    <small className="text-danger">{getError}</small><br/>
                     <div className='mt-3'>
                         <button type="submit" className="btn btn-primary text-uppercase">Simpan</button>
                     </div>  
