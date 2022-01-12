@@ -17,6 +17,7 @@ import AddFaskes from './admin/pages/addFaskes';
 import AddVaccine from './admin/pages/addVaccine';
 import Homepage from './users/pages/homepage';
 import SearchFaskes from './users/pages/searchFaskes';
+import FaskesReview from './users/pages/faskesReview';
 
 function App() {
   return (
@@ -27,7 +28,7 @@ function App() {
             <Route path="/admin/login" exact element={<LoginAdmin/>}/>
             <Route path="/admin/faskes-list" exact element={<FaskesDetail/>}/>
             <Route path="/admin/user-vaccine" exact element={<UsersList/>}/>
-            <Route path="/dev" element={<SearchFaskes/>}/>
+            <Route path="/dev" element={<FaskesReview/>}/>
           </Routes>
         </BrowserRouter>
   );
