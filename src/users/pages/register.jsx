@@ -4,12 +4,11 @@ import logo from '../../assets/Logo.png'
 import login_img from '../../assets/vaccine-one.png'
 
 export default function Register() {
-    const axios = require('axios');
 
     /* Validation error */
     const baseError = {
-        fullName: "",
-        identityNumber: "",
+        Namalengkap: "",
+        NIK: "",
         email: "",
         password: "",
         confirmPassword: ""
@@ -17,8 +16,8 @@ export default function Register() {
 
     /* Base data */
     const baseData = {
-        fullName: "",
-        identityNumber: "",
+        Namalengkap: "",
+        NIK: "",
         email: "",
         password: "",
         confirmPassword: ""
@@ -35,47 +34,34 @@ export default function Register() {
     const regexPassword = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
 
 
-    axios.get('http://localhost:8000/users', {
-        crossdomain: true
-    })
-        .then(function (response) {
-            // handle success
-            console.log(response);
-        })
-        .catch(function (error) {
-            // handle error
-            console.log(error);
-        })
-        .then(function () {
-            // always executed
-        });
+    
 
     const handleInput = (e) => {
         const name = e.target.name;
         const value = e.target.value;
 
-        if (name === "fullName") {
+        if (name === "Namalengkap") {
             if(value === "") {
-                err.fullName = "Nama lengkap tidak boleh kosong!"
+                err.Namalengkap = "Nama lengkap tidak boleh kosong!"
             } else if (regexName.test(value)) {
-                err.fullName = ""
+                err.Namalengkap = ""
             } else {
-                err.fullName = "Nama lengkap hanya terdiri dari huruf!"
+                err.Namalengkap = "Nama lengkap hanya terdiri dari huruf!"
             }
-            setErr({...err, [name]: err.fullName})
+            setErr({...err, [name]: err.Namalengkap})
             setData({...data, [name]: value})
         }
 
-        if (name === "identityNumber") {
+        if (name === "NIK") {
             if (value === "") {
-                err.identityNumber = "NIK tidak dapat kosong!"
+                err.NIK = "NIK tidak dapat kosong!"
             } else if (regexNumber.test(value)) {
-                err.identityNumber = ""
+                err.NIK = ""
             } else {
-                err.identityNumber = "NIK hanya terdiri dari angka!"
+                err.NIK = "NIK hanya terdiri dari angka!"
             }
 
-            setErr({...err, [name]: err.identityNumber})
+            setErr({...err, [name]: err.NIK})
             setData({...data, [name]: value})
         }
 
@@ -117,11 +103,34 @@ export default function Register() {
         }
     }
 
-    const register = (e) => {
+    const register = async(e) => {
 
-        if (err === "") {
-            console.log("Ok")
-        }
+        e.preventDefault()
+
+        
+        console.log("Data ready to send!")
+        var config = {
+            method: 'post',
+            url: 'http://localhost:8000/user/register',
+            data : data
+        };
+
+        await axios(config)
+            .then(response => {
+                console.log(response)
+            })
+            .catch((error) => {
+
+                const status = error.response.status;
+
+                if (status === 500) {
+                    setErr({...err, ["email"]: "Email yang Anda masukkan sudah terdaftar!"})
+                }
+
+                console.error('There was an error!', error);
+            });
+
+        
     }
 
     return (
@@ -139,16 +148,16 @@ export default function Register() {
                         <h3 className='text-center mb-3 fw-bold'>BUAT AKUN</h3>
                         <form onSubmit={register}>
                             <div class="mb-1">
-                                <label for="fullName" class="form-label">Nama lengkap</label>
-                                <input name='fullName' type="text" class="form-control" id="fullName" 
-                                    value={data.fullName} onChange={handleInput} placeholder="Nama lengkap sesuai KTP" aria-label="Name"/>
-                                <small className="text-danger">{err.fullName}</small><br/>
+                                <label for="Namalengkap" class="form-label">Nama lengkap</label>
+                                <input name='Namalengkap' type="text" class="form-control" id="Namalengkap" 
+                                    value={data.Namalengkap} onChange={handleInput} placeholder="Nama lengkap sesuai KTP" aria-label="Name"/>
+                                <small className="text-danger">{err.Namalengkap}</small><br/>
                             </div>
                             <div class="mb-1">
-                                <label for="identityNumber" class="form-label">NIK</label>
-                                <input name='identityNumber' type="text" class="form-control" id="identityNumber" 
-                                    value={data.identityNumber} onChange={handleInput} placeholder="Masukan NIK" aria-label="Number"/>
-                                <small className="text-danger">{err.identityNumber}</small><br/>
+                                <label for="NIK" class="form-label">NIK</label>
+                                <input name='NIK' type="text" class="form-control" id="NIK" 
+                                    value={data.NIK} onChange={handleInput} placeholder="Masukan NIK" aria-label="Number"/>
+                                <small className="text-danger">{err.NIK}</small><br/>
                             </div>
                             <div className="mb-1">
                                 <label for="exampleInputEmail1" class="form-label">Email</label>
@@ -171,7 +180,7 @@ export default function Register() {
                             <div class="mb-3 form-check">
                                 <input type="checkbox" class="form-check-input" id="exampleCheck1" 
                                     onInvalid={(e) => e.target.setCustomValidity('Klik untuk menyetujui')}
-                                    onInput="setCustomValidity('')" required/>
+                                    onInput={(e) => e.target.setCustomValidity('')} required/>
                                 <label class="form-check-label" for="exampleCheck1">Saya setuju dengan Syarat dan Ketentuan serta Kebijakan Privasi.</label>
                             </div>
                             <div className='text-center'>
@@ -181,13 +190,8 @@ export default function Register() {
                     </div>
                     <h6 className='text-center m-5 mb-0'>Sudah punya akun? <a href='#'>Masuk</a></h6>
                 </div>
-                
-                
             </div>
-            
-
         </div>
-        
         </>
     )
 }
