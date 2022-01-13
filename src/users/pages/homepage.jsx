@@ -2,6 +2,7 @@ import Header from '../components/header';
 import Hero from '../components/hero';
 import about from '../../assets/about-img.png'
 import SearchBarFaskes from '../components/searchBarFaskes';
+import { useState } from 'react';
 
 export default function Homepage() {
     

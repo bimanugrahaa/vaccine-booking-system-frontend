@@ -2,12 +2,14 @@ import Header from "../components/header";
 import review_img from '../../assets/review-img.png'
 import { Rating } from "react-simple-star-rating";
 import { useState } from "react";
+import ModalAuth from "../components/modalAuth";
 
 
 export default function AddFaskesReview() {
     
     const [ratingValue, setRatingValue] = useState(0)
-  
+    const [show, setShow] = useState(false);
+
     const handleRating = (rate) => {
         setRatingValue(rate)
     }
@@ -18,7 +20,7 @@ export default function AddFaskesReview() {
         <Header/>
         <div className='container-fluid'>
             <div className='row'>
-                <div className='col-md-5 p-0'>
+                <div className='col-md-4 p-0'>
                     <img src={review_img} className='img-fluid' alt="faskes-review" />
                 </div>
                 <div className='col-md-5 my-3 mx-auto'>
@@ -47,7 +49,7 @@ export default function AddFaskesReview() {
                             <button className="btn btn-outline-primary">Batal</button>
                         </div>
                         <div className="col-md-auto">
-                            <button className="btn btn-primary">Kirim</button>
+                        <button type="button" class="btn btn-primary" onClick={() => setShow(!show)} data-bs-toggle="modal" data-bs-target="#exampleModal">Kirim</button>
                         </div>
                     </div>
 
