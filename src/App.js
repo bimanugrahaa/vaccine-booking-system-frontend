@@ -2,7 +2,7 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.js'
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Header from './users/components/header';
 import LoginUser from './users/pages/login';
 import RegisterUser from './users/pages/register';
@@ -22,6 +22,9 @@ import AddFaskesReview from './users/pages/addFaskesReview';
 import CardStatusVaccine from './users/components/cardStatusVaccine';
 import CardVaccineSchedule from './users/components/cardVaccineSchedule';
 import StatusVaccine from './users/pages/statusVaccine';
+import RegisterVaccination from './users/pages/registerVaccination';
+import RegisterScheduleVaccination from './users/components/registerScheduleVaccination';
+import RegisterUserVaccination from './users/components/registerUserVaccination';
 
 function App() {
   return (
@@ -35,7 +38,11 @@ function App() {
             <Route path="/admin/user-vaccine" exact element={<UsersList/>}/>
             <Route path="/faskes/:id/:name" exact element={<FaskesReview/>}/>
             <Route path="/faskes" exact element={<SearchFaskes/>}/>
-            <Route path="/dev" element={<StatusVaccine/>}/>
+            <Route path="/dev" element={<RegisterVaccination/>}>
+              <Route path="one" element={<RegisterScheduleVaccination/>}/>
+              <Route path="/dev" element={<Navigate to="/dev/one"/>}/>
+              <Route path="two" element={<RegisterUserVaccination/>}/>
+            </Route>
           </Routes>
         </BrowserRouter>
   );
