@@ -1,0 +1,7 @@
+.side-img {
+    background: url(../../assets/vaccine-one.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: auto;
+}
