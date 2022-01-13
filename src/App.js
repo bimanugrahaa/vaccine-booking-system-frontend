@@ -23,12 +23,15 @@ function App() {
   return (
     <BrowserRouter>
           <Routes>
+            <Route path="/" exact element={<Homepage/>}/>
             <Route path="/login" exact element={<LoginUser/>}/>
             <Route path="/register" exact element={<RegisterUser/>}/>
             <Route path="/admin/login" exact element={<LoginAdmin/>}/>
             <Route path="/admin/faskes-list" exact element={<FaskesDetail/>}/>
             <Route path="/admin/user-vaccine" exact element={<UsersList/>}/>
-            <Route path="/dev" element={<AddFaskes/>}/>
+            <Route path="/faskes/:id/:name" exact element={<FaskesReview/>}/>
+            <Route path="/faskes" exact element={<SearchFaskes/>}/>
+            {/* <Route path="/dev" element={<SearchFaskes/>}/> */}
           </Routes>
         </BrowserRouter>
   );
