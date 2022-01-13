@@ -19,6 +19,9 @@ import Homepage from './users/pages/homepage';
 import SearchFaskes from './users/pages/searchFaskes';
 import FaskesReview from './users/pages/faskesReview';
 import AddFaskesReview from './users/pages/addFaskesReview';
+import CardStatusVaccine from './users/components/cardStatusVaccine';
+import CardVaccineSchedule from './users/components/cardVaccineSchedule';
+import StatusVaccine from './users/pages/statusVaccine';
 
 function App() {
   return (
@@ -32,7 +35,7 @@ function App() {
             <Route path="/admin/user-vaccine" exact element={<UsersList/>}/>
             <Route path="/faskes/:id/:name" exact element={<FaskesReview/>}/>
             <Route path="/faskes" exact element={<SearchFaskes/>}/>
-            <Route path="/dev" element={<AddFaskesReview/>}/>
+            <Route path="/dev" element={<StatusVaccine/>}/>
           </Routes>
         </BrowserRouter>
   );
