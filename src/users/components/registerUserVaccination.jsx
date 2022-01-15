@@ -3,7 +3,7 @@ export default function RegisterUserVaccination() {
     
     return (
         <>
-        <div className='col-md-5 my-5 mx-auto'>
+        <div className='col-md-5 my-auto mx-auto'>
             <div className='mx-3 px-3 py-3 card shadow-sm'>
                 <h4 className='text-center mb-3 fw-bold text-uppercase'>Data Diri</h4>
                 <form>

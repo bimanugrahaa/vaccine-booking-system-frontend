@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import logo from '../../assets/Logo.png'
 import login_img from '../../assets/vaccine-one.png'
 
@@ -188,7 +189,7 @@ export default function Register() {
                             </div>       
                         </form>   
                     </div>
-                    <h6 className='text-center m-5 mb-0'>Sudah punya akun? <a href='#'>Masuk</a></h6>
+                    <h6 className='text-center m-5 mb-0'>Sudah punya akun? <Link to="/masuk" className="text-decoration-none">Masuk</Link></h6>
                 </div>
             </div>
         </div>

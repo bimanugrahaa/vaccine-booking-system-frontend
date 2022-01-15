@@ -3,5 +3,13 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    height: auto;
+    height: 1080px;
+}
+
+.primary-color {
+    background-color: #517DB5;
+}
+
+.font-signika {
+    font-family: Signika;
 }

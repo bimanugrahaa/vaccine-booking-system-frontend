@@ -1,8 +1,34 @@
 import axios from 'axios'
+import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react/cjs/react.development'
-import login_img from '../../assets/vaccine-one.png'
+import { useDispatch, useSelector } from 'react-redux';
+import { addMySession } from '../../store/Data';
+import '../css/base.css'
+import { useEffect } from 'react';
+import jwt_decode from 'jwt-decode';
 
 export default function Login() {
+    
+    const mySession = useSelector((state) => state.mySession.mySession)
+    const dispatch = useDispatch()
+    const navigate = useNavigate();
+
+    const authChecker = () => {
+        const decoded = jwt_decode(mySession.token); 
+        if (mySession.token !== "" && decoded.exp * 1000 > Date.now()) {
+            navigate(`/`)
+        }
+
+        // const decoded = jwt_decode(mySession.token); 
+        console.log(decoded);
+        console.log(Date.now())
+    }
+
+    
+
+    useEffect(() => {
+        authChecker()
+    }, [])
     
     /* Base data login for user */
     const baseUserLogin = {
@@ -27,6 +53,9 @@ export default function Login() {
         await axios(config)
             .then(response => {
                 console.log(response)
+                const send = addMySession(response)
+                dispatch(send)
+                navigate(`/`)
             })
             .catch((error) => {
 
@@ -44,9 +73,7 @@ export default function Login() {
         <>
         <div className='container-fluid'>
             <div className='row'>
-                <div className='col-md-5 p-0'>
-                    <img src={login_img} className='img-fluid' alt="vaccine-login" />
-                </div>
+                <div className='col-md-5 p-0 side-img'></div>
                 <div className='col-md-5 my-auto mx-auto'>
                     <div className='mx-5 px-5 py-3 card shadow-sm'>
                         <h3 className='text-center mb-3 fw-bold'>MASUK</h3>
@@ -62,13 +89,13 @@ export default function Login() {
                                 value={user.password} onChange={(e) => setUser({...user, [e.target.name]: e.target.value})}/>
                             </div>
                             <small className="text-danger">{getError}</small><br/>
-                            <a href='#' className='mb-3'>Lupa kata sandi?</a>
-                            <div className='text-center'>
+                            <a href='#' className='mb-3 text-decoration-none'>Lupa kata sandi?</a>
+                            <div className='text-center mt-3'>
                                 <button type="submit" class="btn btn-primary text-uppercase">Masuk</button>
                             </div>       
                         </form>   
                     </div>
-                    <h6 className='text-center m-5'>Belum punya akun? <a href='#'>Buat akun</a></h6>
+                    <h6 className='text-center m-5'>Belum punya akun? <Link to="/daftar" className="text-decoration-none">Buat akun</Link></h6>
                 </div>
                 
                 

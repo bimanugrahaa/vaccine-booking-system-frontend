@@ -3,6 +3,9 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.js'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistor } from './store/Store'
 import Header from './users/components/header';
 import LoginUser from './users/pages/login';
 import RegisterUser from './users/pages/register';
@@ -28,23 +31,35 @@ import RegisterUserVaccination from './users/components/registerUserVaccination'
 
 function App() {
   return (
-    <BrowserRouter>
-          <Routes>
-            <Route path="/" exact element={<Homepage/>}/>
-            <Route path="/login" exact element={<LoginUser/>}/>
-            <Route path="/register" exact element={<RegisterUser/>}/>
-            <Route path="/admin/login" exact element={<LoginAdmin/>}/>
-            <Route path="/admin/faskes-list" exact element={<FaskesDetail/>}/>
-            <Route path="/admin/user-vaccine" exact element={<UsersList/>}/>
-            <Route path="/faskes/:id/:name" exact element={<FaskesReview/>}/>
-            <Route path="/faskes" exact element={<SearchFaskes/>}/>
-            <Route path="/dev" element={<RegisterVaccination/>}>
-              <Route path="one" element={<RegisterScheduleVaccination/>}/>
-              <Route path="/dev" element={<Navigate to="/dev/one"/>}/>
-              <Route path="two" element={<RegisterUserVaccination/>}/>
-            </Route>
-          </Routes>
-        </BrowserRouter>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <BrowserRouter>
+              <Routes>
+                {/* User routes */}
+                <Route path="/" exact element={<Homepage/>}/>
+                <Route path="masuk" exact element={<LoginUser/>}/>
+                <Route path="daftar" exact element={<RegisterUser/>}/>
+                <Route path="faskes" exact element={<SearchFaskes/>}/>
+
+                
+                {/* Admin routes */}
+                <Route path="/admin/login" exact element={<LoginAdmin/>}/>
+                <Route path="/admin/faskes" exact element={<Faskes/>}/>
+                <Route path="/admin/faskes/add" exact element={<AddFaskes/>}/>
+                <Route path="/admin/faskes/detail" exact element={<FaskesDetail/>}/>
+                <Route path="/admin/faskes/add-vaccine" exact element={<AddVaccine/>}/>
+
+                <Route path="/admin/user-vaccine" exact element={<UsersList/>}/>
+                <Route path="/faskes/:id/:name" exact element={<FaskesReview/>}/>
+                <Route path="/dev" element={<RegisterVaccination/>}>
+                  <Route path="one" element={<RegisterScheduleVaccination/>}/>
+                  <Route path="/dev" element={<Navigate to="/dev/one"/>}/>
+                  <Route path="two" element={<RegisterUserVaccination/>}/>
+                </Route>
+              </Routes>
+            </BrowserRouter>
+          </PersistGate>
+        </Provider>
   );
 }
 

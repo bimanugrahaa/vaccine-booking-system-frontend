@@ -15,7 +15,7 @@ export default function Homepage() {
         <div className='row'>
             <div className='col-lg-1'></div>
             <div className='col-lg-3'>
-                <p>AyoVaksin! merupakan sebuah website yang berguna untuk melakukan booking vaksin. 
+                <p id='about'>AyoVaksin! merupakan sebuah website yang berguna untuk melakukan booking vaksin. 
                     AyoVaksin! dapat melakukan pencarian fasilitas kesehatan, pengecekan vaksin tiap 
                     fasilitas kesehatan, hingga melakukan pendaftaran vaksin secara mudah. Yuk daftar 
                     melalui AyoVaksin!
