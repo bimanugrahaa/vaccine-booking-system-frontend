@@ -4,7 +4,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import IsAuth from '../../utils/isAuth.js'
 import { useSelector } from 'react-redux';
 import logo from '../../assets/Logo.png'
-import login_img from '../../assets/vaccine-one.png'
 
 export default function Register() {
 

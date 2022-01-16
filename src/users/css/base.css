@@ -26,6 +26,14 @@
     background-color: #517DB5;
 }
 
+.text-black {
+    color: black;
+}
+
+.text-white {
+    color: white;
+}
+
 .font-signika {
     font-family: Signika;
 }

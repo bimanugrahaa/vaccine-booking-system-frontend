@@ -21,6 +21,7 @@ export default function Header() {
     const logout = () => {
         const logout = deleteMySession()
         dispatch(logout)
+        window.location.reload()
     }
 
     useEffect(() => {

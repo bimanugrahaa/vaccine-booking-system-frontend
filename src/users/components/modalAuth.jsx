@@ -1,4 +1,6 @@
+import { Link } from "react-router-dom"
 import logo from "../../assets/Logo.png"
+import '../css/base.css'
 
 export default function ModalAuth() {
     
@@ -13,8 +15,8 @@ export default function ModalAuth() {
             </div>
             <div class="modal-body text-center p-5 pt-4">
                 <h5 className="fw-bold">Sudah punya akun?</h5>
-                <button className="btn btn-primary my-3">Masuk</button>
-                <h6 className='text-center'>Belum punya akun? <a href='#'>Buat akun</a></h6>
+                <button className="btn btn-primary my-3"><Link to="/masuk" className="text-white text-decoration-none">Masuk</Link></button>
+                <h6 className='text-center'>Belum punya akun? <Link to="/daftar" className="text-decoration-none">Buat akun</Link></h6>
             </div>
             </div>
         </div>
