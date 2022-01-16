@@ -3,32 +3,16 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react/cjs/react.development'
 import { useDispatch, useSelector } from 'react-redux';
 import { addMySession } from '../../store/Data';
+import logo from '../../assets/Logo.png'
+import IsAuth from '../../utils/isAuth.js'
 import '../css/base.css'
 import { useEffect } from 'react';
-import jwt_decode from 'jwt-decode';
 
 export default function Login() {
     
     const mySession = useSelector((state) => state.mySession.mySession)
     const dispatch = useDispatch()
     const navigate = useNavigate();
-
-    const authChecker = () => {
-        const decoded = jwt_decode(mySession.token); 
-        if (mySession.token !== "" && decoded.exp * 1000 > Date.now()) {
-            navigate(`/`)
-        }
-
-        // const decoded = jwt_decode(mySession.token); 
-        console.log(decoded);
-        console.log(Date.now())
-    }
-
-    
-
-    useEffect(() => {
-        authChecker()
-    }, [])
     
     /* Base data login for user */
     const baseUserLogin = {
@@ -39,6 +23,16 @@ export default function Login() {
     /* useState for Login user */
     const [user, setUser] = useState(baseUserLogin)
     const [getError, setError] = useState("")
+    const [auth, getAuth] = useState(false)
+
+    /* Check if user is logged in */
+    const authCheck = () => {
+        getAuth(IsAuth(mySession))
+
+        if (auth) {
+            navigate(`/`)
+        }
+    }
 
     /* Login function => validate data to server */
     const login = async (e) => {
@@ -69,12 +63,21 @@ export default function Login() {
             });
     }
 
+    useEffect(() => {
+        authCheck()
+    })
+
     return (
         <>
         <div className='container-fluid'>
             <div className='row'>
-                <div className='col-md-5 p-0 side-img'></div>
-                <div className='col-md-5 my-auto mx-auto'>
+                <div className='col-md-5 p-0 side-img'>
+                    <img className='m-3' src={logo}/>
+                </div>
+                <div className='col-lg-5 my-5 my-lg-auto mx-auto'>
+                    <div className='m-2 text-center hidden'>
+                        <a href='/'><img className='m-3' src={logo} alt='logo'/></a>
+                    </div>
                     <div className='mx-5 px-5 py-3 card shadow-sm'>
                         <h3 className='text-center mb-3 fw-bold'>MASUK</h3>
                         <form onSubmit={login}>

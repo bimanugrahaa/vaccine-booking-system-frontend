@@ -1,10 +1,15 @@
 import axios from 'axios';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import IsAuth from '../../utils/isAuth.js'
+import { useSelector } from 'react-redux';
 import logo from '../../assets/Logo.png'
 import login_img from '../../assets/vaccine-one.png'
 
 export default function Register() {
+
+    const mySession = useSelector((state) => state.mySession.mySession)
+    const navigate = useNavigate();
 
     /* Validation error */
     const baseError = {
@@ -27,15 +32,22 @@ export default function Register() {
     /* Validation useState */
     const [data, setData] = useState(baseData)
     const [err, setErr] = useState(baseError)
+    const [auth, getAuth] = useState(false)
+
+    /* Check if user is logged in */
+    const authCheck = () => {
+        getAuth(IsAuth(mySession))
+
+        if (auth) {
+            navigate(`/`)
+        }
+    }
 
     /* Validation regex */
     const regexName = /^[A-Za-z ]*$/;
     const regexMail = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     const regexNumber = /^\d+$/;
     const regexPassword = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
-
-
-    
 
     const handleInput = (e) => {
         const name = e.target.name;
@@ -108,7 +120,6 @@ export default function Register() {
 
         e.preventDefault()
 
-        
         console.log("Data ready to send!")
         var config = {
             method: 'post',
@@ -129,23 +140,25 @@ export default function Register() {
                 }
 
                 console.error('There was an error!', error);
-            });
-
-        
+            });        
     }
+
+    useEffect(() => {
+        authCheck()
+    })
 
     return (
         <>
         <div className='container-fluid'>
             <div className='row'>
-                <div className='col-md-5 p-0 img-fluid' style={{backgroundImage: `url("${login_img}")`, backgroundSize:"cover"}}>
-                    <a href="/" className="d-flex align-items-center m-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-                        <img src={logo}/>
-                    </a>
-                    {/* <img src={login_img} className='img-fluid' alt="vaccine-login" /> */}
+                <div className='col-md-5 p-0 side-img'>
+                    <img className='m-3' src={logo}/>
                 </div>
-                <div className='col-md-5 my-5 mx-auto'>
-                    <div className='mx-3 px-3 py-3 card shadow-sm'>
+                <div className='col-lg-5 my-5 my-lg-auto mx-auto'>
+                    <div className='m-2 text-center hidden'>
+                        <a href='/'><img className='m-3' src={logo} alt='logo'/></a>
+                    </div>
+                    <div className='mx-5 px-5 py-3 card shadow-sm'>
                         <h3 className='text-center mb-3 fw-bold'>BUAT AKUN</h3>
                         <form onSubmit={register}>
                             <div class="mb-1">
