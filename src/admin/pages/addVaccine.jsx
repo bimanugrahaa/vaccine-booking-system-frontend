@@ -7,23 +7,57 @@ import DatePicker from 'react-modern-calendar-datepicker';
 import { TimePicker } from 'react-next-dates';
 import { DateToString, LongDate } from '../../utils/dateToString';
 import { Calendar } from '../../utils/calendar';
-import TimeToString from '../../utils/timeToString';
+import { JoinTime, TimeToString } from '../../utils/timeToString';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 export default function AddVaccine() {
     
+    const navigate = useNavigate();
+
+    /* Get current url and ID */
+    const urlNow = window.location.pathname
+    const uriSplit = urlNow.split('/')
+    const ID_Faskes = uriSplit[3]
+
     const baseDataVaccine = {
-        name: "",
-        stock: "",
-        vaccineDate: "",
+        jenisvaksin: "",
+        stokvaksin: 0,
+        jadwal: "",
+        waktu: "",
+        faskes_id: 0,
         startTime: "",
         endTime: ""
     }
 
     const [dataVaccine, setDataVaccine] = useState(baseDataVaccine)
+    const [faskesDetail, getFaskesDetail] = useState({})
 
     const [selectedDay, setSelectedDay] = useState("");
     const [selectedTimeStart, setTimeStart] = useState(null);
     const [selectedTimeEnd, setTimeEnd] = useState(null);
+
+    const getDetail = () => {
+        var config = {
+            method: 'get',
+            url: `http://localhost:8000/faskes/${ID_Faskes}`
+        };
+    
+        axios(config)
+            .then(response => {
+                console.log(response)
+                getFaskesDetail(response.data.data)
+            })
+            .catch((error) => {
+    
+                const status = error.response.status;
+    
+                if (status === 500) {
+                }
+    
+                console.error('There was an error!', error);
+            });
+    }
 
     const Submit = (e) => {
         e.preventDefault()
@@ -33,17 +67,51 @@ export default function AddVaccine() {
         }
 
         const dateToString = DateToString(selectedDay)
-        submit.vaccineDate = dateToString
+
+        submit.jadwal = dateToString
+        submit.faskes_id = parseInt(ID_Faskes)
+        submit.stokvaksin = parseInt(submit.stokvaksin)
 
         if (selectedTimeStart && selectedTimeEnd !== null) {
             submit.startTime = TimeToString(selectedTimeStart.toString())
             submit.endTime = TimeToString(selectedTimeEnd.toString())
         }
+
+        submit.waktu = JoinTime(submit.startTime, submit.endTime)
+        
+        var config = {
+            method: 'post',
+            url: `http://localhost:8000/vaksin`,
+            data: submit
+        };
+    
+        axios(config)
+            .then(response => {
+                console.log(response)
+                goFaskesDetail()
+            })
+            .catch((error) => {
+    
+                const status = error.response.status;
+    
+                if (status === 500) {
+                }
+    
+                console.error('There was an error!', error);
+            });
     }
+
+    const goFaskesDetail = () => {
+        navigate(`/admin/faskes/${ID_Faskes}`)
+    }
+
+    useEffect(() => {
+        getDetail()
+    }, [])
 
     return (
         <>
-        <div className="row">
+        {/* <div className="row">
             <div className='col-md-5 img-fluid'>
                 <a href="/" className="d-flex align-items-center m-3 mb-md-0 me-md-auto text-dark text-decoration-none">
                     <img src={logo} alt='vaccine-logo'/>
@@ -54,7 +122,7 @@ export default function AddVaccine() {
             <div className='col-lg-3'>
                 <Sidebar/>
             </div>
-            <div className='col-lg-auto pe-5'></div>
+            <div className='col-lg-auto pe-5'></div> */}
             <div className='col-lg-8 pe-0 mt-3'>
                 <i class="fas fa-chevron-left m-2"><a className='ps-3 text-decoration-none text-uppercase' href="#">Kembali</a></i>
                 <div className='row'>
@@ -63,10 +131,10 @@ export default function AddVaccine() {
                 <div className='row mt-3'>
                     <div className="col-md-7">
                         <div className="row">
-                            <h3 className='fw-bold'>Rumah Sakit Ceria</h3>
+                            <h3 className='fw-bold'>{faskesDetail?.nama}</h3>
                         </div>
                         <div className="row">
-                            <p className="mb-3">Kelurahan A, Kecamatan B, Kota C, Provinsi D</p>
+                            <p className="mb-3">{`${faskesDetail?.alamat}, Kel. ${faskesDetail?.kelurahan}, Kec. ${faskesDetail?.kecamatan}, Kota ${faskesDetail?.kota}, Prov. ${faskesDetail?.provinsi}`}</p>
                         </div>
                     </div>
                 </div>
@@ -77,13 +145,13 @@ export default function AddVaccine() {
                 <form onSubmit={Submit}>
                     <div className='row'>
                         <div className="col-lg-5 mb-3">
-                            <label htmlFor="name" className="form-label">Jenis vaksin</label>
-                            <input value={dataVaccine.name} onChange={(e) => setDataVaccine({...dataVaccine, [e.target.name]: e.target.value})} name='name' type="text" className="form-control" id="name" aria-label="name" placeholder='Jenis vaksin'/>
+                            <label htmlFor="jenisvaksin" className="form-label">Jenis vaksin</label>
+                            <input value={dataVaccine.jenisvaksin} onChange={(e) => setDataVaccine({...dataVaccine, [e.target.name]: e.target.value})} name='jenisvaksin' type="text" className="form-control" id="jenisvaksin" aria-label="jenisvaksin" placeholder='Jenis vaksin'/>
                         </div>
                         <div className='col-lg-1'></div>
                         <div className="col-lg-5 mb-3">
-                            <label htmlFor="stock" className="form-label">Stok vaksin</label>
-                            <input value={dataVaccine.stock} onChange={(e) => setDataVaccine({...dataVaccine, [e.target.name]: e.target.value})} name='stock' type="text" className="form-control" id="stock" aria-label="stock" placeholder='Stok vaksin'/>
+                            <label htmlFor="stokvaksin" className="form-label">Stok vaksin</label>
+                            <input value={dataVaccine.stokvaksin} onChange={(e) => setDataVaccine({...dataVaccine, [e.target.name]: e.target.value})} name='stokvaksin' type="text" className="form-control" id="stokvaksin" aria-label="stokvaksin" placeholder='Stok vaksin'/>
                         </div>
                     </div>
                     <div className='row'>
@@ -122,7 +190,7 @@ export default function AddVaccine() {
                     </div>  
                 </form>
                 </div>
-            </div>
+            {/* </div> */}
         </div>
         </>
     )

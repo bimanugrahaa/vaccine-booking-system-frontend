@@ -28,6 +28,7 @@ import StatusVaccine from './users/pages/statusVaccine';
 import RegisterVaccination from './users/pages/registerVaccination';
 import RegisterScheduleVaccination from './users/components/registerScheduleVaccination';
 import RegisterUserVaccination from './users/components/registerUserVaccination';
+import Admin from './admin/pages/admin';
 
 function App() {
   return (
@@ -44,13 +45,23 @@ function App() {
                 
                 {/* Admin routes */}
                 <Route path="/admin/login" exact element={<LoginAdmin/>}/>
-                <Route path="/admin/faskes" exact element={<Faskes/>}/>
+
+                <Route path="/admin" exact element={<Admin/>}>
+                  <Route path="faskes" exact element={<Faskes/>}/>
+                  <Route path="faskes/add" exact element={<AddFaskes/>}/>
+                  <Route path="faskes/:id" exact element={<FaskesDetail/>}/>
+                  <Route path="faskes/:id/vaccine" exact element={<AddVaccine/>}/>                  
+                </Route>
+                
+                {/* <Route path="/admin/faskes" exact element={<Faskes/>}/>
                 <Route path="/admin/faskes/add" exact element={<AddFaskes/>}/>
                 <Route path="/admin/faskes/detail" exact element={<FaskesDetail/>}/>
-                <Route path="/admin/faskes/add-vaccine" exact element={<AddVaccine/>}/>
+                <Route path="/admin/faskes/add-vaccine" exact element={<AddVaccine/>}/> */}
 
                 <Route path="/admin/user-vaccine" exact element={<UsersList/>}/>
                 <Route path="/faskes/:id/:name" exact element={<FaskesReview/>}/>
+
+                {/* Development */}
                 <Route path="/dev" element={<RegisterVaccination/>}>
                   <Route path="one" element={<RegisterScheduleVaccination/>}/>
                   <Route path="/dev" element={<Navigate to="/dev/one"/>}/>

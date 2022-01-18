@@ -1,8 +1,17 @@
 import logo from '../../assets/Logo.png'
 import axios from 'axios';
 import { useState } from 'react/cjs/react.development';
+import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux';
+import { addMySession } from '../../store/Data';
+import IsAuth from '../../utils/isAuth.js'
+import { useEffect } from 'react';
 
 export default function Login() {
+
+    const mySession = useSelector((state) => state.mySession.mySession)
+    const dispatch = useDispatch()
+    const navigate = useNavigate();
 
     /* Base data login for admin */
     const baseAdmin = {
@@ -13,6 +22,16 @@ export default function Login() {
     /* useState for Login admin */
     const [admin, setAdmin] = useState(baseAdmin)
     const [getError, setError] = useState("")
+    const [auth, getAuth] = useState(false)
+
+    /* Check if user is logged in */
+    const authCheck = () => {
+        getAuth(IsAuth(mySession))
+
+        if (auth) {
+            navigate(`/admin/faskes`)
+        }
+    }
 
     /* Login function => validate data to server */
     const login = async (e) => {
@@ -27,6 +46,9 @@ export default function Login() {
         await axios(config)
             .then(response => {
                 console.log(response)
+                const send = addMySession(response)
+                dispatch(send)
+                navigate(`/admin/faskes`)
             })
             .catch((error) => {
 
@@ -40,6 +62,10 @@ export default function Login() {
             });
     }
 
+    useEffect(() => {
+        authCheck()
+    })
+
     return (
         <>
         <div className="container-fluid m-3 p-0">
@@ -52,7 +78,7 @@ export default function Login() {
             </div>
             <div className='row mt-5'>
             <div className="col-md-4 col-2"></div>
-            <div className="col-md-4 col-8 p-3 p-md-4 card">
+            <div className="col-md-4 col-8 p-3 p-md-4 card my-5">
                 <h3 className='text-center mb-3 fw-bold'>MASUK</h3>
                 <form onSubmit={login}>
                     <div class="mb-3">

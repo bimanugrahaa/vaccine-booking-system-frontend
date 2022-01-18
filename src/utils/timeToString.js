@@ -1,4 +1,4 @@
-export default function TimeToString(timing) {
+function TimeToString(timing) {
     
     if (timing !== null) {
         const clocks = timing.split(" ")
@@ -10,3 +10,8 @@ export default function TimeToString(timing) {
     return "null"
     
 }
+
+function JoinTime(time1, time2) {
+    return `${time1} - ${time2}`
+}
+export { TimeToString, JoinTime }

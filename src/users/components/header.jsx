@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import logo from "../../assets/Logo.png"
 import "../css/header.css"
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,6 +10,7 @@ export default function Header() {
      
     const mySession = useSelector((state) => state.mySession.mySession)
     const dispatch = useDispatch()
+    const navigate = useNavigate();
     const [auth, getAuth] = useState(false)
 
     /* Check if user is logged in */
@@ -21,7 +22,7 @@ export default function Header() {
     const logout = () => {
         const logout = deleteMySession()
         dispatch(logout)
-        window.location.reload()
+        navigate(`/`)
     }
 
     useEffect(() => {
@@ -43,7 +44,7 @@ export default function Header() {
                         {auth? 
                         <div class="dropdown nav-item mx-3">
                             <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                            Nama
+                            Andi Pratama
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                             <li><a class="dropdown-item" href="#">Profil Saya</a></li>

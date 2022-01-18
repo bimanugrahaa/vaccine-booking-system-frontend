@@ -129,6 +129,7 @@ export default function Register() {
         await axios(config)
             .then(response => {
                 console.log(response)
+                navigate(`/masuk`)
             })
             .catch((error) => {
 

@@ -103,7 +103,7 @@ export default function AddFaskes() {
 
     return (
         <>
-        <div className="row">
+        {/* <div className="row">
             <div className='col-md-5 img-fluid'>
                 <a href="/" className="d-flex align-items-center m-3 mb-md-0 me-md-auto text-dark text-decoration-none">
                     <img src={logo} alt='vaccine-logo'/>
@@ -114,9 +114,9 @@ export default function AddFaskes() {
             <div className='col-lg-3'>
                 <Sidebar/>
             </div>
-            <div className='col-lg-auto pe-5'></div>
+            <div className='col-lg-auto pe-5'></div> */}
             <div className='col-lg-8 pe-0 mt-3'>
-                <i class="fas fa-chevron-left m-2"><a className='ps-3 text-decoration-none text-uppercase' href="#">Kembali</a></i>
+                <i class="fas fa-chevron-left m-2"><a className='ps-3 text-decoration-none text-uppercase' href="/admin/faskes">Kembali</a></i>
                 <div className='row'>
                     <h4 className='fw-bold text-uppercase text-center p-0'>Fasilitas Kesehatan Vaksinasi Covid-19</h4>
                 </div>
@@ -178,7 +178,7 @@ export default function AddFaskes() {
                 </form>
                 </div>
             </div>
-        </div>
+        {/* </div> */}
         </>
     )
 }
