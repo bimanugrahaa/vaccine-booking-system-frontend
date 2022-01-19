@@ -29,6 +29,8 @@ import RegisterVaccination from './users/pages/registerVaccination';
 import RegisterScheduleVaccination from './users/components/registerScheduleVaccination';
 import RegisterUserVaccination from './users/components/registerUserVaccination';
 import Admin from './admin/pages/admin';
+import ConfirmRegisterVaccination from './users/pages/confirmRegisterVaccination';
+import VaccinationRegistrationSuccess from './users/pages/vaccinationRegistrationSuccess';
 
 function App() {
   return (
@@ -41,6 +43,14 @@ function App() {
                 <Route path="masuk" exact element={<LoginUser/>}/>
                 <Route path="daftar" exact element={<RegisterUser/>}/>
                 <Route path="faskes" exact element={<SearchFaskes/>}/>
+
+                <Route path="/status" exact element={<StatusVaccine/>}/>
+                <Route path="/konfirmasi" exact element={<ConfirmRegisterVaccination/>}/>
+                <Route path="/sukses" exact element={<VaccinationRegistrationSuccess/>}/>
+
+
+                <Route path="faskes/detail" exact element={<FaskesReview/>}/>
+                <Route path="faskes/detail/review" exact element={<AddFaskesReview/>}/>
 
                 
                 {/* Admin routes */}
@@ -59,7 +69,7 @@ function App() {
                 <Route path="/admin/faskes/add-vaccine" exact element={<AddVaccine/>}/> */}
 
                 <Route path="/admin/user-vaccine" exact element={<UsersList/>}/>
-                <Route path="/faskes/:id/:name" exact element={<FaskesReview/>}/>
+                
 
                 {/* Development */}
                 <Route path="/dev" element={<RegisterVaccination/>}>

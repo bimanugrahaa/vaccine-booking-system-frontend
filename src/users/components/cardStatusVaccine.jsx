@@ -9,7 +9,7 @@ export default function CardStatusVaccine() {
                 <h5 className="text-uppercase p-3 m-3 border-bottom">Andi Pratama</h5>
                 <h5>NIK</h5>
                 <h5 className="fw-bold">1234567890</h5>
-                <h5 className="my-5 text-success">Sudah Vaksin Kedua</h5>
+                <h5 className="my-5 text-success">Sudah Vaksin Pertama</h5>
             </div>
         </div>
         </>

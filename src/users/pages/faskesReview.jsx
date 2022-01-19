@@ -12,7 +12,7 @@ export default function FaskesReview() {
         <h5 className="fw-bold text-uppercase text-center mt-5">Fasilitas kesehatan</h5>
         <div className="row">
             <div className="col-lg-8 p-0">
-                <FaskesList useIndex={false} useButton={false}/>
+                {/* <FaskesList useIndex={false} useButton={false}/> */}
             </div>
             <div className="col-lg-3 p-0 me-2">
                 <RatingReview/>

@@ -12,34 +12,34 @@ export default function RegisterScheduleVaccination() {
                     <select
                         name='Kategori' className="form-select mb-4" aria-label=".form-select-sm example" required>
                         <option selected disabled>Pilih Kategori</option>
-                        <option selected>Masyarakat umum</option>
-                        <option selected>Lanjut usia</option>
+                        <option >Masyarakat umum</option>
+                        <option >Lanjut usia</option>
                     </select>
                     <label htmlFor="Lokasi" className="form-label">Lokasi</label>
                     <select
                         name='Lokasi' className="form-select mb-4" aria-label=".form-select-sm example" required>
                         <option selected disabled>Pilih Lokasi Faskes</option>
-                        <option selected>Rumah Sakit Ceria</option>
-                        <option selected>Rumah Sakit Bahagia</option>
+                        <option >Rumah Sakit Ceria</option>
+                        <option >Rumah Sakit Bahagia</option>
                     </select>
                     <label htmlFor="Tanggal" className="form-label">Tanggal</label>
                     <select
                         name='Tanggal' className="form-select mb-4" aria-label=".form-select-sm example" required>
                         <option selected disabled>Pilih Tanggal</option>
-                        <option selected>17-01-2022</option>
-                        <option selected>19-01-2022</option>
+                        <option >17-01-2022</option>
+                        <option >19-01-2022</option>
                     </select>
                     <label htmlFor="Jam" className="form-label">Jam</label>
                     <select
                         name='Jam' className="form-select mb-4" aria-label=".form-select-sm example" required>
                         <option selected disabled>Pilih Jam</option>
-                        <option selected>10.00-12.00</option>
+                        <option >10.00-12.00</option>
                     </select>
                     <label htmlFor="Vaksin" className="form-label">Vaksin</label>
                     <select
                         name='Vaksin' className="form-select mb-4" aria-label=".form-select-sm example" required>
                         <option selected disabled>Pilih Jenis Vaksin</option>
-                        <option selected>Sinovac</option>
+                        <option >Sinovac</option>
                     </select>
                     <p>Sisa kuota: 100</p>
                     <div className='text-center'>
