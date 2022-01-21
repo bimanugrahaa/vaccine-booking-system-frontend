@@ -15,7 +15,8 @@ export const Data = createSlice({
     },
     reducers: {
         addMySession: (state, action) => {
-            const newSession = action.payload.data.data
+            console.log(action)
+            const newSession = action.payload
             state.mySession = newSession
             console.log("state", state)
             console.log("action", action)

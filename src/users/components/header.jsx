@@ -44,7 +44,7 @@ export default function Header() {
                         {auth? 
                         <div class="dropdown nav-item mx-3">
                             <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                            Andi Pratama
+                            {mySession.namalengkap}
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                             <li><a class="dropdown-item" href="#">Profil Saya</a></li>

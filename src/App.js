@@ -31,6 +31,10 @@ import RegisterUserVaccination from './users/components/registerUserVaccination'
 import Admin from './admin/pages/admin';
 import ConfirmRegisterVaccination from './users/pages/confirmRegisterVaccination';
 import VaccinationRegistrationSuccess from './users/pages/vaccinationRegistrationSuccess';
+import Dashboard from './users/pages/dashboard';
+import Profile from './users/pages/profile';
+import EditProfile from './users/pages/editProfile';
+import EditPassword from './users/pages/editPassword';
 
 function App() {
   return (
@@ -48,6 +52,12 @@ function App() {
                 <Route path="/konfirmasi" exact element={<ConfirmRegisterVaccination/>}/>
                 <Route path="/sukses" exact element={<VaccinationRegistrationSuccess/>}/>
 
+                <Route path="/dashboard" exact element={<Dashboard/>}>
+                  <Route path="profil" exact element={<Profile/>}/>
+                  <Route path="profil/edit" exact element={<EditProfile/>}/>
+                  <Route path="edit-password" exact element={<EditPassword/>}/>
+                  {/* <Route path="faskes/:id/vaccine" exact element={<AddVaccine/>}/>                   */}
+                </Route>
 
                 <Route path="faskes/detail" exact element={<FaskesReview/>}/>
                 <Route path="faskes/detail/review" exact element={<AddFaskesReview/>}/>

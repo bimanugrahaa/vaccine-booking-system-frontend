@@ -7,6 +7,7 @@ import logo from '../../assets/Logo.png'
 import IsAuth from '../../utils/isAuth.js'
 import '../css/base.css'
 import { useEffect } from 'react';
+import { LoginUser } from '../../services/auth';
 
 export default function Login() {
     
@@ -36,31 +37,14 @@ export default function Login() {
 
     /* Login function => validate data to server */
     const login = async (e) => {
-        e.preventDefault()
+        const value = await LoginUser(e, user)
 
-        var config = {
-            method: 'post',
-            url: 'http://localhost:8000/user/login',
-            data : user
-        };
+        if (value.status !== 500) {
+            dispatch(addMySession(value.response))
+        } else {
+            setError("Data yang Anda masukan salah!")
+        }
 
-        await axios(config)
-            .then(response => {
-                console.log(response)
-                const send = addMySession(response)
-                dispatch(send)
-                navigate(`/`)
-            })
-            .catch((error) => {
-
-                const status = error.response.status;
-
-                if (status === 500) {
-                    setError("Data yang Anda masukan salah!")
-                }
-
-                console.error('There was an error!', error);
-            });
     }
 
     useEffect(() => {
@@ -80,7 +64,7 @@ export default function Login() {
                     </div>
                     <div className='mx-5 px-5 py-3 card shadow-sm'>
                         <h3 className='text-center mb-3 fw-bold'>MASUK</h3>
-                        <form onSubmit={login}>
+                        <form onSubmit={(e) => login(e)}>
                             <div className="mb-3">
                                 <label for="exampleInputEmail1" class="form-label">Email</label>
                                 <input name='email' type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder='Masukan email'
