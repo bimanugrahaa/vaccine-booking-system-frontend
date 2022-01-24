@@ -5,7 +5,11 @@ const mySession = {
     username: "",
     name: "",
     email: "",
-    token: ""
+    token: "",
+    family: {
+        namaLengkap: "",
+        nik: 0
+    }
 }
 
 export const Data = createSlice({
@@ -23,9 +27,16 @@ export const Data = createSlice({
         },
         deleteMySession: (state) => {
             state.mySession = mySession
-        }
+        },
+        checkFamilyStatus: (state, action) => {
+            console.log(action)
+            const familyStatus = action.payload
+            state.mySession.family = familyStatus
+            console.log("state", state)
+            console.log("action", action)
+        },
     }
 })
 
-export const { addMySession, deleteMySession } = Data.actions;
+export const { addMySession, deleteMySession, checkFamilyStatus } = Data.actions;
 export default Data.reducer

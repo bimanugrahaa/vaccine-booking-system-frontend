@@ -47,7 +47,7 @@ export default function Header() {
                             {mySession.namalengkap}
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <li><a class="dropdown-item" href="#">Profil Saya</a></li>
+                            <li><Link to="/dashboard/profil" className="dropdown-item">Profil Saya</Link></li>
                             <li><a class="dropdown-item" href="#" onClick={() => logout()}>Keluar</a></li>
                             </ul>
                         </div>

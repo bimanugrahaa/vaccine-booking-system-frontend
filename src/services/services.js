@@ -6,14 +6,130 @@ const value = {
     response: "",
 }
 
-const VaccineStatus = (e) => {
+const VaccineStatus = async(e, user, token) => {
 
     e.preventDefault()
 
+    // axios.defaults.headers.common = {'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE2NDI4MTYwMjQsInVzZXJfaWQiOjl9.O0Nm801yGk-HuV5NuMu5B7rSwaPU7IVRYjG670TfE8g`}
     const config = {
         method: 'post',
         url: `${BASE_URL}/requestvaksin/login`,
-        data : user
+        data : user,
+        headers : {
+            'Authorization': `Bearer ${token}`
+        }
     };
 
+    await axios(config)
+        .then(response => {
+            value.status = "success"
+            value.response = response.data.data
+        })
+
+        .catch((error) => {
+            console.error('There was an error!', error);
+
+            const status = error.response.status;
+            if (status === 500) {
+                value.status = status
+                value.response = "Data yang Anda masukan salah!"
+            }
+        });
+
+        return value
+
 }
+
+const GetUserDetail = async(e, mySession) => {
+
+    const config = {
+        method: 'get',
+        url: `${BASE_URL}/user/${mySession.id}`,
+        headers : {
+            'Authorization': `Bearer ${mySession.token}`
+        }
+    };
+
+    await axios(config)
+        .then(response => {
+            value.status = "success"
+            value.response = response.data.data
+        })
+
+        .catch((error) => {
+            console.error('There was an error!', error);
+
+            const status = error.response.status;
+            // if (status === 500) {
+                value.status = status
+                value.response = error
+            // }
+        });
+
+        return value
+}
+
+const EditUserDetail = async(e, mySession, data) => {
+
+    e.preventDefault()
+    console.log("data api", data)
+    const config = {
+        method: 'put',
+        url: `${BASE_URL}/user`,
+        data: data,
+        headers : {
+            'Authorization': `Bearer ${mySession.token}`
+        }
+    };
+
+    await axios(config)
+        .then(response => {
+            value.status = "success"
+            value.response = response.data.data
+        })
+
+        .catch((error) => {
+            console.error('There was an error!', error);
+
+            const status = error.response.status;
+            if (status === 500) {
+                value.status = status
+                value.response = "Data yang Anda masukan salah!"
+            }
+        });
+
+        return value
+}
+
+const EditUserPassword = async(e, mySession, data) => {
+
+    e.preventDefault()
+    console.log("data api", data)
+    const config = {
+        method: 'put',
+        url: `${BASE_URL}/user/newpassword`,
+        data: data,
+        headers : {
+            'Authorization': `Bearer ${mySession.token}`
+        }
+    };
+
+    await axios(config)
+        .then(response => {
+            value.status = "success"
+            value.response = response.data.data
+        })
+
+        .catch((error) => {
+            console.error('There was an error!', error);
+
+            const status = error.response.status;
+            // if (status === 500) {
+            value.status = status
+            value.response = error
+        });
+
+        return value
+}
+
+export { VaccineStatus, GetUserDetail, EditUserDetail, EditUserPassword }

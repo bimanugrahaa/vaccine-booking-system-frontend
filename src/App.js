@@ -35,6 +35,8 @@ import Dashboard from './users/pages/dashboard';
 import Profile from './users/pages/profile';
 import EditProfile from './users/pages/editProfile';
 import EditPassword from './users/pages/editPassword';
+import VaccinationTicket from './users/pages/vaccinationTicket';
+import VaccinationTicketDetail from './users/pages/vaccinationTicketDetail';
 
 function App() {
   return (
@@ -48,14 +50,17 @@ function App() {
                 <Route path="daftar" exact element={<RegisterUser/>}/>
                 <Route path="faskes" exact element={<SearchFaskes/>}/>
 
-                <Route path="/status" exact element={<StatusVaccine/>}/>
-                <Route path="/konfirmasi" exact element={<ConfirmRegisterVaccination/>}/>
-                <Route path="/sukses" exact element={<VaccinationRegistrationSuccess/>}/>
+                <Route path="status" exact element={<StatusVaccine/>}/>
+                <Route path="konfirmasi" exact element={<ConfirmRegisterVaccination/>}/>
+                <Route path="sukses" exact element={<VaccinationRegistrationSuccess/>}/>
 
                 <Route path="/dashboard" exact element={<Dashboard/>}>
+                  <Route path="/dashboard" exact element={<Navigate to="/dashboard/profil"/>}/>
                   <Route path="profil" exact element={<Profile/>}/>
                   <Route path="profil/edit" exact element={<EditProfile/>}/>
                   <Route path="edit-password" exact element={<EditPassword/>}/>
+                  <Route path="tiket" exact element={<VaccinationTicket/>}/>
+                  <Route path="tiket/detail" exact element={<VaccinationTicketDetail/>}/>
                   {/* <Route path="faskes/:id/vaccine" exact element={<AddVaccine/>}/>                   */}
                 </Route>
 
