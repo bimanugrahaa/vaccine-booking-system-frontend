@@ -60,10 +60,8 @@ const GetUserDetail = async(e, mySession) => {
             console.error('There was an error!', error);
 
             const status = error.response.status;
-            // if (status === 500) {
-                value.status = status
-                value.response = error
-            // }
+            value.status = status
+            value.response = error
         });
 
         return value
@@ -124,7 +122,6 @@ const EditUserPassword = async(e, mySession, data) => {
             console.error('There was an error!', error);
 
             const status = error.response.status;
-            // if (status === 500) {
             value.status = status
             value.response = error
         });
@@ -132,4 +129,135 @@ const EditUserPassword = async(e, mySession, data) => {
         return value
 }
 
-export { VaccineStatus, GetUserDetail, EditUserDetail, EditUserPassword }
+const GetSearchFaskes = async(nama) => {
+
+    const config = {
+        method: 'post',
+        url: `${BASE_URL}/faskesnama`,
+        data: {
+            "nama": nama
+        }
+    };
+
+    await axios(config)
+        .then(response => {
+            value.status = "success"
+            value.response = response.data.data
+        })
+
+        .catch((error) => {
+            console.error('There was an error!', error);
+
+            const status = error.response.status;
+            value.status = status
+            value.response = error
+        });
+
+        return value
+}
+
+const GetAllFaskes = async() => {
+    var config = {
+        method: 'get',
+        url: `${BASE_URL}/faskes/semua`
+    };
+
+    await axios(config)
+        .then(response => {
+            value.status = "success"
+            value.response = response.data.data
+            console.log(response)
+            // getFaskesList(response)
+        })
+        .catch((error) => {
+
+            const status = error.response.status;
+
+            if (status === 500) {
+            }
+
+            console.error('There was an error!', error);
+        });
+
+        return value
+}
+
+const GetFaskesByID = async(id) => {
+    var config = {
+        method: 'get',
+        url: `${BASE_URL}/faskes/${id}`
+    };
+
+    await axios(config)
+        .then(response => {
+            value.status = "success"
+            value.response = response.data.data
+            console.log(response)
+            // getFaskesList(response)
+        })
+        .catch((error) => {
+
+            const status = error.response.status;
+
+            if (status === 500) {
+            }
+
+            console.error('There was an error!', error);
+        });
+
+        return value
+}
+
+const GetVaksinByID = async(id) => {
+    var config = {
+        method: 'get',
+        url: `${BASE_URL}/vaksin/${id}`
+    };
+
+    await axios(config)
+        .then(response => {
+            value.status = "success"
+            value.response = response.data.data
+            console.log(response)
+            // getFaskesList(response)
+        })
+        .catch((error) => {
+
+            const status = error.response.status;
+
+            if (status === 500) {
+            }
+
+            console.error('There was an error!', error);
+        });
+
+        return value
+}
+
+const GetCountVaksin = async(id) => {
+    var config = {
+        method: 'post',
+        url: `${BASE_URL}/requestvaksin/kuota/${id}`
+    };
+
+    await axios(config)
+        .then(response => {
+            value.status = "success"
+            value.response = response.data
+            console.log(response)
+            // getFaskesList(response)
+        })
+        .catch((error) => {
+
+            const status = error.response.status;
+
+            if (status === 500) {
+            }
+
+            console.error('There was an error!', error);
+        });
+
+        return value
+}
+
+export { VaccineStatus, GetUserDetail, EditUserDetail, EditUserPassword, GetSearchFaskes, GetAllFaskes, GetFaskesByID, GetVaksinByID, GetCountVaksin }

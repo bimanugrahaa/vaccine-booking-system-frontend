@@ -49,7 +49,6 @@ function App() {
                 <Route path="masuk" exact element={<LoginUser/>}/>
                 <Route path="daftar" exact element={<RegisterUser/>}/>
                 <Route path="faskes" exact element={<SearchFaskes/>}/>
-
                 <Route path="status" exact element={<StatusVaccine/>}/>
                 <Route path="konfirmasi" exact element={<ConfirmRegisterVaccination/>}/>
                 <Route path="sukses" exact element={<VaccinationRegistrationSuccess/>}/>
@@ -64,8 +63,8 @@ function App() {
                   {/* <Route path="faskes/:id/vaccine" exact element={<AddVaccine/>}/>                   */}
                 </Route>
 
-                <Route path="faskes/detail" exact element={<FaskesReview/>}/>
-                <Route path="faskes/detail/review" exact element={<AddFaskesReview/>}/>
+                {/* <Route path="faskes/detail" exact element={<FaskesReview/>}/>
+                <Route path="faskes/detail/review" exact element={<AddFaskesReview/>}/> */}
 
                 
                 {/* Admin routes */}
@@ -87,9 +86,9 @@ function App() {
                 
 
                 {/* Development */}
-                <Route path="/dev" element={<RegisterVaccination/>}>
+                <Route path="/daftar-vaksin" element={<RegisterVaccination/>}>
                   <Route path="one" element={<RegisterScheduleVaccination/>}/>
-                  <Route path="/dev" element={<Navigate to="/dev/one"/>}/>
+                  <Route path="/daftar-vaksin" element={<Navigate to="/daftar-vaksin/one"/>}/>
                   <Route path="two" element={<RegisterUserVaccination/>}/>
                 </Route>
               </Routes>

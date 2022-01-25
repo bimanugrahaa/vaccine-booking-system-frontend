@@ -7,14 +7,20 @@ import VaccineType from '../components/vaccineType';
 import img from '../../assets/home-img.jpg'
 import img_two from '../../assets/home-2-img.jpg'
 import '../css/homepage.css'
+import { useNavigate } from 'react-router-dom';
 
 export default function Homepage() {
     
+    const navigate = useNavigate()
+    const goSearch = () => {
+        navigate('/faskes', {state: "search"})
+    }
+
     return (
         <>
         <Header/>
-        <Hero/>
-        <SearchBarFaskes/>
+        <Hero goSearch={goSearch}/>
+        <SearchBarFaskes switchPage={true}/>
         <div className='row p-3 m-5'>
             <div className='ps-xl-5 ms-xl-5 col-md-5'>
                 <h3 className='ms-md-5 text-uppercase text-center fw-bold font-signika'>Apa itu Vaksinasi?</h3>

@@ -1,6 +1,11 @@
+import { useNavigate } from "react-router-dom"
 
 export default function CardVaccineSchedule() {
     
+    const navigate = useNavigate()
+    const goRegistration = () => {
+        navigate('/daftar-vaksin')
+    }
     return (
         <>
         <div className="container-fluid card border-3 p-2 mx-auto my-3">
@@ -8,7 +13,7 @@ export default function CardVaccineSchedule() {
             <div className="text-center mt-4">
                 <h5 className="text-danger fw-bold">Belum terdaftar</h5>
                 <h5>Daftarkan diri Anda melalui tombol berikut</h5>
-                <button className="btn btn-primary my-3">Daftar Vaksinasi Covid-19</button>
+                <button onClick={goRegistration} className="btn btn-primary my-3">Daftar Vaksinasi Covid-19</button>
             </div>
         </div>
         </>

@@ -1,5 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import { GetAllFaskes, GetSearchFaskes } from "../../services/services";
 import FaskesList from "../components/faskesList";
 import Header from "../components/header";
 import SearchBarFaskes from "../components/searchBarFaskes";
@@ -7,31 +9,43 @@ import SearchBarFaskes from "../components/searchBarFaskes";
 export default function SearchFaskes() {
     
     const [faskesList, getFaskesList] = useState([])
+    
+    const {state} = useLocation()
+    const [nama, setNama] = useState(state)
 
-    const getFaskes = () => {
-        var config = {
-            method: 'get',
-            url: 'http://localhost:8000/faskes/semua'
-        };
-    
-        axios(config)
-            .then(response => {
-                console.log(response)
-                getFaskesList(response)
-            })
-            .catch((error) => {
-    
-                const status = error.response.status;
-    
-                if (status === 500) {
-                }
-    
-                console.error('There was an error!', error);
-            });
+    const SetName = (name) => {
+        console.log("masuk")
+        console.log(name)
+        // setNama(name)
+        GetSearch(name)
+    }
+    const GetFaskes = async () => {
+        const value = await GetAllFaskes()
+
+        if (value.status === "success") {
+            getFaskesList(value.response)
+        }
+    }
+
+    const GetSearch = async (nama) => {
+        console.log(nama)
+        // setNama(nama)
+        const value = await GetSearchFaskes(nama)
+
+        if (value.status === "success") {
+            console.log(value)
+            getFaskesList(value.response)
+            
+        }
     }
 
     useEffect(() => {
-        getFaskes()
+        if (state === null) {
+            GetFaskes()
+        } else {
+            GetSearch(nama)
+        }
+        
     }, [])
     
     console.log(faskesList)
@@ -39,9 +53,9 @@ export default function SearchFaskes() {
     return (
         <>
         <Header/>
-        <SearchBarFaskes/>
-        {faskesList?.data?.data?.map((faskes) => 
-            <FaskesList useButton={true} faskes={faskes}/>
+        <SearchBarFaskes switchPage={false} SetName={SetName}/>
+        {faskesList?.map((faskes) => 
+            <FaskesList key={faskes.id} useButton={true} faskes={faskes}/>
         )}
         {/* <FaskesList/>
         <FaskesList/> */}
