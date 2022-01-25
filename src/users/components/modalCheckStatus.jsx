@@ -5,7 +5,7 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import logo from "../../assets/Logo.png"
 import { VaccineStatus } from "../../services/services"
 
-export default function ModalCheckStatus() {
+export default function ModalCheckStatus(props) {
 
     const mySession = useSelector((state) => state.mySession.mySession)
     const dispatch = useDispatch()
@@ -31,11 +31,17 @@ export default function ModalCheckStatus() {
 
     /* useState for check user status */
     const [user, setUser] = useState(baseUserData)
+    const [nama, setNama] = useState("")
+    const [nik, setNIK] = useState("")
+
+    console.log(props)
 
     const statusA = () => {
         // e.preventDefault()
-        dispatch(checkFamilyStatus(user))
-        navigate('/status')
+        // dispatch(checkFamilyStatus(user))
+        // navigate('/status', {state: user})
+        console.log("Masuk")
+        props.goSearchs()
     }
 
     const login = async (e) => {
@@ -53,7 +59,7 @@ export default function ModalCheckStatus() {
         }
 
     }
-    console.log(user)
+    // console.log(props.nama)
     return (
         <>
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -64,11 +70,11 @@ export default function ModalCheckStatus() {
                 <button type="button" class="btn-close" aria-label="Close"></button>
             </div>
             <div class="modal-body p-5 pt-4">
-                {/* <form onSubmit={(e) => login(e)}> */}
+                {/* <form > */}
                     <div class="mb-1">
                         <label for="Namalengkap" class="form-label">Nama lengkap</label>
                         <input name='Namalengkap' type="text" class="form-control" id="Namalengkap" 
-                            value={user.Namalengkap} onChange={(e) => setUser({...user, [e.target.name]: e.target.value})} placeholder="Nama lengkap sesuai KTP" aria-label="Name" />
+                            value={nama} onChange={(e) => setNama(e.target.value)} placeholder="Nama lengkap sesuai KTP" aria-label="Name" />
                         {/* <small className="text-danger">{err.Namalengkap}</small><br/> */}
                     </div>
                     <div class="mb-1">
@@ -78,9 +84,9 @@ export default function ModalCheckStatus() {
                         {/* <small className="text-danger">{err.nik}</small><br/> */}
                     </div>
                     <div className="text-center">
-                    {/* <Link to='status' state={{user : true}} className="text-decoration-none text-light"> */}
-                        <button type="button" onClick={() => statusA()} className="btn btn-primary text-center my-3">Selanjutnya</button>
-                    {/* </Link> */}
+                    <Link to='status' state={{user : true}} className="text-decoration-none text-light">
+                        <button onClick={statusA} className="btn btn-primary text-center my-3">Selanjutnya</button>
+                    </Link>
                         {/* <button className="btn btn-primary text-center my-3">Selanjutnya */}
                             {/* <Link to={'status'} state={{user : 'user'}} className="text-decoration-none text-light">Selanjutnya</Link> */}
                         {/* </button> */}

@@ -4,16 +4,16 @@ import CardStatusVaccine from "../components/cardStatusVaccine";
 import CardVaccineSchedule from "../components/cardVaccineSchedule";
 import Header from "../components/header";
 
-export default function StatusVaccine(state) {
+export default function StatusVaccine() {
 
     const mySession = useSelector((state) => state.mySession.mySession)
 
     console.log(mySession)
-    console.log("state", state)
-    const location = useLocation();
-    const { user = 'nama' } = location.state || {}
-    console.log(location)
-    console.log("user", user)
+    // console.log("state", state)
+    const {state} = useLocation();
+    // const { user = 'nama' } = location.state || {}
+    console.log(state)
+    // console.log("user", user)
     return (
         <>
         <Header/>

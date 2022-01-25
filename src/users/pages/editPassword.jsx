@@ -61,6 +61,7 @@ export default function EditPassword() {
             const logout = deleteMySession()
             dispatch(logout)
             navigate(`/`)
+
         } else if(value.status === 401){
             setErr({...err, ["password"]: "Data yang Anda masukan salah!"})
         }
@@ -99,16 +100,6 @@ export default function EditPassword() {
         <div className="container-fluid p-2 col-md-6 mx-auto my-3">
             <div className="card border-3 p-4">
                 <h5 className="border-bottom pb-4 border-2">Profil</h5>
-
-                {/* <h6 className="mt-2">Nama Lengkap</h6>
-                <h6 className="fw-bold">Andi Pratama</h6>
-
-                <h6 className="mt-2">NIK</h6>
-                <h6 className="fw-bold">31789654000981145</h6>
-
-                <h6 className="mt-2">Email</h6>
-                <h6 className="fw-bold">andipratama@gmail.com</h6> */}
-
                 <form onSubmit={EditPassword}>
                     <div class="mt-3 mb-3">
                         <label for="password" class="form-label">Kata sandi sekarang</label>
@@ -128,18 +119,10 @@ export default function EditPassword() {
                         value={user.confirmpassword} onChange={handleInput} placeholder='Masukan konfirmasi kata sandi baru'/>
                         <small className="text-danger">{err.confirmPassword}</small><br/>
                     </div>
-                    
-                    {/* <div className='text-center mt-3'>
-                        <button type="submit" class="btn btn-primary text-uppercase">Masuk</button>
-                    </div>    */}
                     <div className='mt-5'>
                         <button type="submit" class="btn btn-primary text-uppercase">Simpan</button>
                     </div>      
                 </form> 
-                
-                {/* <div className='mt-5'>
-                    <button type="submit" class="btn btn-primary text-uppercase">Edit Profil</button>
-                </div>   */}
             </div>
         </div>
         <ToastContainer
