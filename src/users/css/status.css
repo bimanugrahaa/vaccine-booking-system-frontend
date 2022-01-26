@@ -1,5 +1,5 @@
- /* The Modal (background) */
- .status {
+/* The Modal (background) */
+.status {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
@@ -10,36 +10,24 @@
     overflow: auto; /* Enable scroll if needed */
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-  }
+}
 
-  .hide {
-      visibility: hidden;
-  }
+.show-hide {
+    visibility: hidden;
+}
 
-  .show-status {
-      display: block;
-  }
-  
-  /* Modal Content/Box */
-  .status-content {
-    background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
-  }
-  
-  /* The Close Button */
-  .status-close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-  }
-  
-  .status-close:hover,
-  .status-close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-  } 
+.show-status {
+    display: block;
+}
+
+/* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}

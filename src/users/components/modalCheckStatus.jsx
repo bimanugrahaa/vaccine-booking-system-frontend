@@ -8,148 +8,72 @@ import "../css/status.css"
 
 export default function ModalCheckStatus(props) {
 
-    const mySession = useSelector((state) => state.mySession.mySession)
-    const dispatch = useDispatch()
     const navigate = useNavigate();
-    
-    // const data = VaccineStatus("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE2NDI4MTYwMjQsInVzZXJfaWQiOjl9.O0Nm801yGk-HuV5NuMu5B7rSwaPU7IVRYjG670TfE8g")
-
-    // console.log(data)
-
-    // const CheckStatus = (e) => {
-
-    //     const data = VaccineStatus(e, {nama: "Siti Aminah", nik: 1234567890}, "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE2NDI4MTYwMjQsInVzZXJfaWQiOjl9.O0Nm801yGk-HuV5NuMu5B7rSwaPU7IVRYjG670TfE8g")
-
-    //     console.log(data)
-    // }
-
 
     /* Base data for check user status */
     const baseUserData = {
-        Namalengkap: "",
-        nik: ""
+        nama: "",
+        nik: "",
     }
 
     /* useState for check user status */
     const [user, setUser] = useState(baseUserData)
-    const [nama, setNama] = useState("")
-    const [nik, setNIK] = useState("")
+    const [err, setErr] = useState("")
 
-    console.log(props)
+    const regexNumber = /^\d+$/;
 
-    const statusA = (e) => {
-        e.preventDefault()
-        // dispatch(checkFamilyStatus(user))
-        // navigate('/status', {state: user})
-        console.log("Masuk")
-        // props.goSearchs()
-    }
+    const goCheckStatus = () => {
 
-    const login = async (e) => {
-        e.preventDefault()
-        const value = await VaccineStatus(e, user)
-
-        console.log(value)
-        if (value.status !== 500) {
-            e.preventDefault()
-            dispatch(checkFamilyStatus(user))
-            navigate(`.../status`)
-        } else {
-            // setError("Data yang Anda masukan salah!")
-            console.log("A")
+        if (err === "") {
+            navigate('/status', {state: user})
         }
-
+        
     }
+    const checkNIK = (e) => {
 
-    useEffect(() =>{
-        console.log("Masuk useefeect")
-    },[])
-    console.log(props)
+        const name = e.target.name;
+        const value = e.target.value;
+
+        if (name === "nik") {
+            if (value === "") {
+                setErr("NIK tidak dapat kosong!")
+            } else if (regexNumber.test(value)) {
+                setErr("")
+            } else if (!regexNumber.test(value)) {
+                setErr("NIK hanya terdiri dari angka!")
+            }
+
+            setUser({...user, [e.target.name]: e.target.value})
+        }
+    }
     return (
         <>
-        <div id="aaaa" class={props.show ? "show-status status":"hide status"}>
-
-        {/* <div class="status-content"> */}
-            {/* <span class="status-close" onClick={() => props.setShow(false)}>&times;</span> */}
-            {/* <p>Some text in the Modal..</p> */}
-            {/* <button onClick={() => navigate('/status', {state: user})} className="btn btn-primary text-center my-3">Selanjutnya</button> */}
-        {/* </div> */}
-
-        <div class="modal-dialog  modal-dialog-centered">
-            <div class="modal-content">
-            <div class="modal-header border-0">
-                <img src={logo} alt="" />
-                <button onClick={() => props.setShow(false)} type="button" class="btn-close" aria-label="Close"></button>
-            </div>
-            <div class="modal-body p-5 pt-4">
-                {/* <form > */}
-                    <div class="mb-1">
-                        <label for="Namalengkap" class="form-label">Nama lengkap</label>
-                        <input name='Namalengkap' type="text" class="form-control" id="Namalengkap" 
-                            value={nama} onChange={(e) => setNama(e.target.value)} placeholder="Nama lengkap sesuai KTP" aria-label="Name" />
-                        {/* <small className="text-danger">{err.Namalengkap}</small><br/> */}
+        <div class={props.show ? "show-status status":"show-hide status"}>
+            <div class="modal-dialog  modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header border-0">
+                        <img src={logo} alt="" />
+                        <button onClick={() => props.setShow(false)} type="button" class="btn-close" aria-label="Close"></button>
                     </div>
-                    <div class="mb-1">
-                        <label for="nik" class="form-label">NIK</label>
-                        <input name='nik' type="text" class="form-control" id="nik" 
-                            value={user.nik} onChange={(e) => setUser({...user, [e.target.name]: e.target.value})} placeholder="Masukan nik" aria-label="Number" />
-                        {/* <small className="text-danger">{err.nik}</small><br/> */}
+                    <div class="modal-body p-5 pt-4">
+                            <div class="mb-1">
+                                <label for="nama" class="form-label">Nama lengkap</label>
+                                <input name='nama' type="text" class="form-control" id="nama" 
+                                    value={user.nama} onChange={(e) => setUser({...user, [e.target.name]: e.target.value})} placeholder="Nama lengkap sesuai KTP" aria-label="Name" />
+                            </div>
+                            <div class="mb-1">
+                                <label for="nik" class="form-label">NIK</label>
+                                <input name='nik' type="number" class="form-control" id="nik" 
+                                    value={user.nik} onChange={(e) => checkNIK(e)} placeholder="Masukan nik" aria-label="Number" />
+                                    <small className="text-danger">{err}</small><br/>
+                            </div>
+                            <div className="text-center">
+                                <button onClick={() => goCheckStatus()} className="btn btn-primary text-center my-3">Selanjutnya</button>
+                            </div>
                     </div>
-                    <div className="text-center">
-                    {/* <Link to='status' state={{user : true}} className="text-decoration-none text-light">
-                        <button onClick={() => statusA()} className="btn btn-primary text-center my-3">Selanjutnya</button>
-                    </Link> */}
-                    <button onClick={() => navigate('/status', {state: user})} className="btn btn-primary text-center my-3">Selanjutnya</button>
-
-                    </div>
-                {/* </form> */}
-                
-            </div>
+                </div>
             </div>
         </div>
-
-        </div>
-
-        
-
-        {/* <button onClick={() => statusA()} className="btn btn-primary text-center my-3">Selanjutnya</button> */}
-        {/* <div style={props.show ? {display: "block"}:{display: "none"}} id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"> */}
-        {/* <div class="modal-dialog  modal-dialog-centered">
-            <div class="modal-content">
-            <div class="modal-header border-0">
-                <img src={logo} alt="" />
-                <button type="button" class="btn-close" aria-label="Close"></button>
-            </div>
-            <div class="modal-body p-5 pt-4"> */}
-                {/* <form > */}
-                    {/* <div class="mb-1">
-                        <label for="Namalengkap" class="form-label">Nama lengkap</label>
-                        <input name='Namalengkap' type="text" class="form-control"  id="Namalengkap" 
-                            value={nama} onChange={(e) => setNama(e.target.value)} placeholder="Nama lengkap sesuai KTP" aria-label="Name" /> */}
-                        {/* <small className="text-danger">{err.Namalengkap}</small><br/> */}
-                    {/* </div>
-                    <div class="mb-1">
-                        <label for="nik" class="form-label">NIK</label>
-                        <input name='nik' type="text" class="form-control" id="nik" 
-                            value={user.nik} onChange={(e) => setUser({...user, [e.target.name]: e.target.value})} placeholder="Masukan nik" aria-label="Number" /> */}
-                        {/* <small className="text-danger">{err.nik}</small><br/> */}
-                    {/* </div>
-                    <div className="text-center"> */}
-                    {/* <Link to='status' state={{user : true}} className="text-decoration-none text-light"> */}
-                        {/* <button onClick={navigate('/status', {state: user})} className="btn btn-primary text-center my-3">Selanjutnya</button> */}
-                    {/* </Link> */}
-                        {/* <button className="btn btn-primary text-center my-3">Selanjutnya */}
-                            {/* <Link to={'status'} state={{user : 'user'}} className="text-decoration-none text-light">Selanjutnya</Link> */}
-                        {/* </button> */}
-                    {/* </div> */}
-                {/* </form> */}
-
-                {/* <a onClick={login}>Selanjutnya</a> */}
-                
-            {/* </div>
-            </div>
-        </div>
-        </div> */}
         </>
     )
 }
