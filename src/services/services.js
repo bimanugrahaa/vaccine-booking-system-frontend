@@ -353,4 +353,31 @@ const EditRequestVaksinDua = async(mySession, data) => {
         return value
 }
 
-export { VaccineStatus, GetUserDetail, EditUserDetail, EditUserPassword, GetSearchFaskes, GetAllFaskes, GetFaskesByID, GetVaksinByID, GetCountVaksin, PostRequestVaksin, EditRequestVaksinSatu, EditRequestVaksinDua }
+const GetAllRequestVaksin = async() => {
+    var config = {
+        method: 'get',
+        url: `${BASE_URL}/requestvaksin`
+    };
+
+    await axios(config)
+        .then(response => {
+            value.status = "success"
+            value.response = response.data
+            console.log(response)
+            // getFaskesList(response)
+        })
+        .catch((error) => {
+
+            const status = error.response.status;
+
+            if (status === 500) {
+            }
+
+            console.error('There was an error!', error);
+        });
+
+        return value
+}
+
+export { VaccineStatus, GetUserDetail, EditUserDetail, EditUserPassword, GetSearchFaskes, GetAllFaskes, GetFaskesByID, GetVaksinByID, GetCountVaksin, PostRequestVaksin, EditRequestVaksinSatu, EditRequestVaksinDua,
+GetAllRequestVaksin }

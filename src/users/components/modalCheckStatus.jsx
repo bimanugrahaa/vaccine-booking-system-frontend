@@ -4,6 +4,7 @@ import { checkFamilyStatus } from '../../store/Data';
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import logo from "../../assets/Logo.png"
 import { VaccineStatus } from "../../services/services"
+import "../css/status.css"
 
 export default function ModalCheckStatus(props) {
 
@@ -36,12 +37,12 @@ export default function ModalCheckStatus(props) {
 
     console.log(props)
 
-    const statusA = () => {
-        // e.preventDefault()
+    const statusA = (e) => {
+        e.preventDefault()
         // dispatch(checkFamilyStatus(user))
         // navigate('/status', {state: user})
         console.log("Masuk")
-        props.goSearchs()
+        // props.goSearchs()
     }
 
     const login = async (e) => {
@@ -59,15 +60,26 @@ export default function ModalCheckStatus(props) {
         }
 
     }
-    // console.log(props.nama)
+
+    useEffect(() =>{
+        console.log("Masuk useefeect")
+    },[])
+    console.log(props)
     return (
         <>
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div id="aaaa" class={props.show ? "show-status status":"hide status"}>
+
+        {/* <div class="status-content"> */}
+            {/* <span class="status-close" onClick={() => props.setShow(false)}>&times;</span> */}
+            {/* <p>Some text in the Modal..</p> */}
+            {/* <button onClick={() => navigate('/status', {state: user})} className="btn btn-primary text-center my-3">Selanjutnya</button> */}
+        {/* </div> */}
+
         <div class="modal-dialog  modal-dialog-centered">
             <div class="modal-content">
             <div class="modal-header border-0">
                 <img src={logo} alt="" />
-                <button type="button" class="btn-close" aria-label="Close"></button>
+                <button onClick={() => props.setShow(false)} type="button" class="btn-close" aria-label="Close"></button>
             </div>
             <div class="modal-body p-5 pt-4">
                 {/* <form > */}
@@ -84,21 +96,60 @@ export default function ModalCheckStatus(props) {
                         {/* <small className="text-danger">{err.nik}</small><br/> */}
                     </div>
                     <div className="text-center">
-                    <Link to='status' state={{user : true}} className="text-decoration-none text-light">
-                        <button onClick={statusA} className="btn btn-primary text-center my-3">Selanjutnya</button>
-                    </Link>
-                        {/* <button className="btn btn-primary text-center my-3">Selanjutnya */}
-                            {/* <Link to={'status'} state={{user : 'user'}} className="text-decoration-none text-light">Selanjutnya</Link> */}
-                        {/* </button> */}
+                    {/* <Link to='status' state={{user : true}} className="text-decoration-none text-light">
+                        <button onClick={() => statusA()} className="btn btn-primary text-center my-3">Selanjutnya</button>
+                    </Link> */}
+                    <button onClick={() => navigate('/status', {state: user})} className="btn btn-primary text-center my-3">Selanjutnya</button>
+
                     </div>
                 {/* </form> */}
-
-                {/* <a onClick={login}>Selanjutnya</a> */}
                 
             </div>
             </div>
         </div>
+
         </div>
+
+        
+
+        {/* <button onClick={() => statusA()} className="btn btn-primary text-center my-3">Selanjutnya</button> */}
+        {/* <div style={props.show ? {display: "block"}:{display: "none"}} id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"> */}
+        {/* <div class="modal-dialog  modal-dialog-centered">
+            <div class="modal-content">
+            <div class="modal-header border-0">
+                <img src={logo} alt="" />
+                <button type="button" class="btn-close" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-5 pt-4"> */}
+                {/* <form > */}
+                    {/* <div class="mb-1">
+                        <label for="Namalengkap" class="form-label">Nama lengkap</label>
+                        <input name='Namalengkap' type="text" class="form-control"  id="Namalengkap" 
+                            value={nama} onChange={(e) => setNama(e.target.value)} placeholder="Nama lengkap sesuai KTP" aria-label="Name" /> */}
+                        {/* <small className="text-danger">{err.Namalengkap}</small><br/> */}
+                    {/* </div>
+                    <div class="mb-1">
+                        <label for="nik" class="form-label">NIK</label>
+                        <input name='nik' type="text" class="form-control" id="nik" 
+                            value={user.nik} onChange={(e) => setUser({...user, [e.target.name]: e.target.value})} placeholder="Masukan nik" aria-label="Number" /> */}
+                        {/* <small className="text-danger">{err.nik}</small><br/> */}
+                    {/* </div>
+                    <div className="text-center"> */}
+                    {/* <Link to='status' state={{user : true}} className="text-decoration-none text-light"> */}
+                        {/* <button onClick={navigate('/status', {state: user})} className="btn btn-primary text-center my-3">Selanjutnya</button> */}
+                    {/* </Link> */}
+                        {/* <button className="btn btn-primary text-center my-3">Selanjutnya */}
+                            {/* <Link to={'status'} state={{user : 'user'}} className="text-decoration-none text-light">Selanjutnya</Link> */}
+                        {/* </button> */}
+                    {/* </div> */}
+                {/* </form> */}
+
+                {/* <a onClick={login}>Selanjutnya</a> */}
+                
+            {/* </div>
+            </div>
+        </div>
+        </div> */}
         </>
     )
 }

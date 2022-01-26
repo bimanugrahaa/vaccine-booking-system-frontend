@@ -37,6 +37,9 @@ import EditProfile from './users/pages/editProfile';
 import EditPassword from './users/pages/editPassword';
 import VaccinationTicket from './users/pages/vaccinationTicket';
 import VaccinationTicketDetail from './users/pages/vaccinationTicketDetail';
+import UserVaccine from './admin/pages/userVaccine';
+import NewsPage from './admin/pages/newsPage';
+import UserVaccineHome from './admin/pages/userVaccineHome';
 
 function App() {
   return (
@@ -75,6 +78,10 @@ function App() {
                   <Route path="faskes/add" exact element={<AddFaskes/>}/>
                   <Route path="faskes/:id" exact element={<FaskesDetail/>}/>
                   <Route path="faskes/:id/vaccine" exact element={<AddVaccine/>}/>                  
+                  <Route path="user-vaccine" exact element={<UserVaccineHome/>}/>
+                  <Route path="user-vaccine/one" exact element={<UserVaccine/>}/>
+                  <Route path="user-vaccine/two" exact element={<UserVaccine/>}/>
+                  <Route path="news" exact element={<NewsPage/>}/>
                 </Route>
                 
                 {/* <Route path="/admin/faskes" exact element={<Faskes/>}/>
@@ -82,7 +89,7 @@ function App() {
                 <Route path="/admin/faskes/detail" exact element={<FaskesDetail/>}/>
                 <Route path="/admin/faskes/add-vaccine" exact element={<AddVaccine/>}/> */}
 
-                <Route path="/admin/user-vaccine" exact element={<UsersList/>}/>
+                {/* <Route path="/admin/user-vaccine" exact element={<UsersList/>}/> */}
                 
 
                 {/* Development */}
