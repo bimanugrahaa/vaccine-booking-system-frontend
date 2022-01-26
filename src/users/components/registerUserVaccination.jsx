@@ -1,8 +1,15 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
+import DatePicker from "react-modern-calendar-datepicker"
+import { Calendar } from '../../utils/calendar';
+import { useLocation, useNavigate } from "react-router-dom"
+import { DateToString } from "../../utils/dateToString";
 
 export default function RegisterUserVaccination() {
-    
+    const {state} = useLocation()
+    const navigate = useNavigate()
+    const [data, setData] = useState(state)
+    const [selectedDay, setSelectedDay] = useState("");
     const [provinsi, getProvinsi] = useState([])
     const [provinsiID, setProvinsiID] = useState(0)
     const [kota, getKota] = useState([])
@@ -10,6 +17,19 @@ export default function RegisterUserVaccination() {
     const [kecamatan, getKecamatan] = useState([])
     const [kecamatanID, setKecamatanID] = useState(0)
     const [kelurahan, getKelurahan] = useState([])
+
+    console.log(data)
+
+    const convertData = () => {
+
+        const submit = {
+            ...data
+        }
+        const dateToString = DateToString(selectedDay)
+        submit.tanggallahir = dateToString
+
+        navigate('/daftar-vaksin/konfirmasi', {state: submit})
+    }
 
     const baseURLDaerah = "https://dev.farizdotid.com/api/daerahindonesia"
 
@@ -68,45 +88,51 @@ export default function RegisterUserVaccination() {
                 <h4 className='text-center mb-3 fw-bold text-uppercase'>Data Diri</h4>
                 <form>
                     <div class="mt-3 mb-3">
-                        <label for="Namalengkap" class="form-label">Nama lengkap</label>
-                        <input name='Namalengkap' type="text" class="form-control" id="Namalengkap" 
+                        <label for="nama" class="form-label">Nama lengkap</label>
+                        <input name='nama' type="text" class="form-control" id="nama" 
+                            value={data.jenisvaksin} onChange={(e) => setData({...data, [e.target.name]: e.target.value})}
                             placeholder="Nama lengkap sesuai KTP" aria-label="Name"/>
                         {/* <small className="text-danger">{err.Namalengkap}</small><br/> */}
                     </div>
                     <div class="mb-3">
-                        <label for="NIK" class="form-label">NIK</label>
-                        <input name='NIK' type="text" class="form-control" id="NIK" 
+                        <label for="nik" class="form-label">NIK</label>
+                        <input name='nik' type="text" class="form-control" id="nik"
+                            value={data.nik} onChange={(e) => setData({...data, [e.target.name]: e.target.value})} 
                             placeholder="Masukan NIK" aria-label="Number"/>
                         {/* <small className="text-danger">{err.NIK}</small><br/> */}
                     </div>
-                    <label htmlFor="Jeniskelamin" className="form-label">Jenis Kelamin</label>
-                    <select
-                        name='Jeniskelamin' className="form-select mb-4" aria-label=".form-select-sm example" required>
+                    <label htmlFor="jeniskelamin" className="form-label">Jenis Kelamin</label>
+                    <select onChange={(e) => {
+                        // setData(e.target[e.target.selectedIndex])
+                        setData({...data, [e.target.name]: e.target.value})}}
+                        name='jeniskelamin' className="form-select mb-4" aria-label=".form-select-sm example" required>
                         <option selected disabled>Pilih Jenis Kelamin</option>
                         <option>Laki-laki</option>
                         <option>Perempuan</option>
                     </select>
-                    <label htmlFor="Tanggallahir" className="form-label">Tanggal Lahir</label>
-                    <select
-                        name='Tanggallahir' className="form-select mb-4" aria-label=".form-select-sm example" required>
-                        <option selected disabled>Pilih Tanggal Lahir</option>
-                        <option>Rumah Sakit Ceria</option>
-                        <option>Rumah Sakit Bahagia</option>
-                    </select>
+                    <div className='row mb-3'>
+                        <label htmlFor="tanggallahir" className="form-label">Tanggal Lahir</label>
+                        <DatePicker inputClassName="form-control bg-white w-100 fs-6 text-start rounded" 
+                            value={selectedDay} onChange={setSelectedDay} inputPlaceholder="Tanggal lahir" 
+                            calendarClassName="responsive-calendar" locale={Calendar}
+                            shouldHighlightWeekends />
+                    </div>
                     <div class="mb-3">
-                        <label for="No" class="form-label">No. Handphone</label>
-                        <input name='No' type="text" class="form-control" id="No" 
+                        <label for="nomor" class="form-label">No. Handphone</label>
+                        <input name='nomor' type="text" class="form-control" id="nomor"
+                            value={data.nomor} onChange={(e) => setData({...data, [e.target.name]: e.target.value})} 
                             placeholder="Masukan No. Handphone" aria-label="Number"/>
                         {/* <small className="text-danger">{err.NIK}</small><br/> */}
                     </div>
                     <div className="mb-3">
                         <label htmlFor="alamat" className="form-label">Alamat</label>
-                        <textarea name='alamat' className="form-control" id="adress" rows="3"></textarea>
+                        <textarea name='alamat' className="form-control" id="adress" rows="3"
+                        value={data.alamat} onChange={(e) => setData({...data, [e.target.name]: e.target.value})}></textarea>
                     </div>
                     <label htmlFor="Provinsi" className="form-label">Provinsi</label>
                     <select onChange={(e) => {
                         setProvinsiID(e.target[e.target.selectedIndex].dataset.id)
-                        // setDataFaskes({...dataFaskes, [e.target.name]: e.target.value})
+                        setData({...data, [e.target.name]: e.target.value}) 
                     }} 
                         name='provinsi' className="form-select mb-3" aria-label=".form-select-sm example" required>
                         <option selected disabled>Pilih provinsi</option>
@@ -117,7 +143,7 @@ export default function RegisterUserVaccination() {
                     <label htmlFor="Kota/Kabupaten" className="form-label">Kota/Kabupaten</label>
                     <select onChange={(e) => {
                         setKotaID(e.target[e.target.selectedIndex].dataset.id)
-                        // setDataFaskes({...dataFaskes, [e.target.name]: e.target.value})
+                        setData({...data, [e.target.name]: e.target.value}) 
                     }} 
                         name='kota' className="form-select mb-3" aria-label=".form-select-sm example">
                         <option selected disabled>Pilih kota/kabupaten</option>
@@ -128,7 +154,7 @@ export default function RegisterUserVaccination() {
                     <label htmlFor="Kecamatan" className="form-label">Kecamatan</label>
                     <select onChange={(e) => {
                         setKecamatanID(e.target[e.target.selectedIndex].dataset.id)
-                        // setDataFaskes({...dataFaskes, [e.target.name]: e.target.value})
+                        setData({...data, [e.target.name]: e.target.value}) 
                     }} 
                         name='kecamatan' className="form-select mb-3" aria-label=".form-select-sm example">
                         <option selected disabled>Pilih kecamatan</option>
@@ -138,7 +164,7 @@ export default function RegisterUserVaccination() {
                     </select>
                     <label htmlFor="Kelurahan" className="form-label">Kelurahan</label>
                     <select onChange={(e) => {
-                        // setDataFaskes({...dataFaskes, [e.target.name]: e.target.value})
+                        setData({...data, [e.target.name]: e.target.value}) 
                     }} 
                         name='kelurahan' className="form-select mb-3" aria-label=".form-select-sm example">
                         <option selected disabled>Pilih kelurahan</option>
@@ -148,7 +174,7 @@ export default function RegisterUserVaccination() {
                     </select>
                     {/* <small className="text-danger">{getError}</small><br/> */}
                     <div className='text-center'>
-                        <button type="button" class="btn btn-primary text-uppercase">Selanjutnya</button>
+                        <button type="button" onClick={() => convertData()} class="btn btn-primary text-uppercase">Selanjutnya</button>
                     </div>       
                 </form>   
             </div>

@@ -260,4 +260,97 @@ const GetCountVaksin = async(id) => {
         return value
 }
 
-export { VaccineStatus, GetUserDetail, EditUserDetail, EditUserPassword, GetSearchFaskes, GetAllFaskes, GetFaskesByID, GetVaksinByID, GetCountVaksin }
+const PostRequestVaksin = async(mySession, data) => {
+    console.log(data)
+    var config = {
+        method: 'post',
+        url: `${BASE_URL}/requestvaksin`,
+        data: data,
+        headers : {
+            'Authorization': `Bearer ${mySession.token}`
+        }
+    };
+
+    await axios(config)
+        .then(response => {
+            value.status = "success"
+            value.response = response.data
+            console.log(response)
+            // getFaskesList(response)
+        })
+        .catch((error) => {
+
+            const status = error.response.status;
+
+            if (status === 500) {
+            }
+
+            console.error('There was an error!', error);
+        });
+
+        return value
+}
+
+const EditRequestVaksinSatu = async(mySession, data) => {
+    console.log(data)
+    var config = {
+        method: 'put',
+        url: `${BASE_URL}/status/satu`,
+        data: data,
+        headers : {
+            'Authorization': `Bearer ${mySession.token}`
+        }
+    };
+
+    await axios(config)
+        .then(response => {
+            value.status = "success"
+            value.response = response.data
+            console.log(response)
+            // getFaskesList(response)
+        })
+        .catch((error) => {
+
+            const status = error.response.status;
+
+            if (status === 500) {
+            }
+
+            console.error('There was an error!', error);
+        });
+
+        return value
+}
+
+const EditRequestVaksinDua = async(mySession, data) => {
+    console.log(data)
+    var config = {
+        method: 'put',
+        url: `${BASE_URL}/status/dua`,
+        data: data,
+        headers : {
+            'Authorization': `Bearer ${mySession.token}`
+        }
+    };
+
+    await axios(config)
+        .then(response => {
+            value.status = "success"
+            value.response = response.data
+            console.log(response)
+            // getFaskesList(response)
+        })
+        .catch((error) => {
+
+            const status = error.response.status;
+
+            if (status === 500) {
+            }
+
+            console.error('There was an error!', error);
+        });
+
+        return value
+}
+
+export { VaccineStatus, GetUserDetail, EditUserDetail, EditUserPassword, GetSearchFaskes, GetAllFaskes, GetFaskesByID, GetVaksinByID, GetCountVaksin, PostRequestVaksin, EditRequestVaksinSatu, EditRequestVaksinDua }

@@ -50,7 +50,7 @@ function App() {
                 <Route path="daftar" exact element={<RegisterUser/>}/>
                 <Route path="faskes" exact element={<SearchFaskes/>}/>
                 <Route path="status" exact element={<StatusVaccine/>}/>
-                <Route path="konfirmasi" exact element={<ConfirmRegisterVaccination/>}/>
+                {/* <Route path="konfirmasi" exact element={<ConfirmRegisterVaccination/>}/> */}
                 <Route path="sukses" exact element={<VaccinationRegistrationSuccess/>}/>
 
                 <Route path="/dashboard" exact element={<Dashboard/>}>
@@ -90,6 +90,7 @@ function App() {
                   <Route path="one" element={<RegisterScheduleVaccination/>}/>
                   <Route path="/daftar-vaksin" element={<Navigate to="/daftar-vaksin/one"/>}/>
                   <Route path="two" element={<RegisterUserVaccination/>}/>
+                  <Route path="konfirmasi" element={<ConfirmRegisterVaccination/>}/>
                 </Route>
               </Routes>
             </BrowserRouter>

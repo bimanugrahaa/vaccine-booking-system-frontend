@@ -1,16 +1,39 @@
 import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { GetAllFaskes, GetCountVaksin, GetFaskesByID, GetVaksinByID } from '../../services/services'
 
 export default function RegisterScheduleVaccination() {
-    
+    const mySession = useSelector((state) => state.mySession.mySession)
+
+    const baseData = {
+        kategori: "",
+        nama: "",
+        nik: "",
+        jeniskelamin: "",
+        tanggallahir: "",
+        nomor:        "",
+        alamat:       "",
+        provinsi:     "",
+        kota:         "",
+        kecamatan:    "",
+        kelurahan:    "",
+        user_id:        mySession.id,
+        vaksinID_satu: 0,
+        status_satu:   "",
+        vaksinID_dua:  0,
+        status_dua:    ""
+    }
+
     const [faskesList, getFaskesList] = useState([])
     const [faskesID, setFaskesID] = useState(0)
     const [vaccineList, getVaccineList] = useState([])
     const [vaccineID, setVaccineID] = useState(0)
     const [vaccine, getVaccine] = useState([])
     const [quota, setVaccineQuota] = useState(0)
+    const [data, setData] = useState(baseData)
 
+    
 
     const GetFaskes = async () => {
         const value = await GetAllFaskes()
@@ -31,6 +54,13 @@ export default function RegisterScheduleVaccination() {
     const GetVaccineTime = async () => {
         const value = await GetVaksinByID(vaccineID)
 
+        if (baseData.status_satu === "belum" || baseData.status_satu === "expired" || baseData.status_satu === "") {
+            setData({...data, ["vaksinID_satu"]: parseInt(vaccineID)})
+        } else if (baseData.status_dua === "belum" || baseData.status_dua === "expired" || baseData.status_dua === "") {
+            setData({...data, ["vaksinID_dua"]: parseInt(vaccineID)})
+        }
+
+        
         if (value.status === "success") {
             getVaccine(value.response)
         }
@@ -66,9 +96,11 @@ export default function RegisterScheduleVaccination() {
             <div className='mx-3 px-3 py-3 card shadow-sm'>
                 <h4 className='text-center mb-3 fw-bold text-uppercase'>Pendaftaran Vaksin</h4>
                 <form>
-                    <label htmlFor="Kategori" className="form-label">Kategori</label>
-                    <select
-                        name='Kategori' className="form-select mb-4" aria-label=".form-select-sm example" required>
+                    <label htmlFor="kategori" className="form-label">Kategori</label>
+                    <select onChange={(e) => {
+                        // setData(e.target[e.target.selectedIndex])
+                        setData({...data, [e.target.name]: e.target.value})}}
+                        name='kategori' className="form-select mb-4" aria-label=".form-select-sm example" required>
                         <option selected disabled>Pilih Kategori</option>
                         <option >Masyarakat umum</option>
                         <option >Lanjut usia</option>
@@ -109,7 +141,7 @@ export default function RegisterScheduleVaccination() {
                     </select>
                     <p>Sisa kuota: {vaccine.stokvaksin - quota.data}</p>
                     <div className='text-center'>
-                        <Link to="/daftar-vaksin/two">
+                        <Link to="/daftar-vaksin/two" state={data}>
                             <button type="button" class="btn btn-primary text-uppercase">Selanjutnya</button>
                         </Link>
                     </div>       

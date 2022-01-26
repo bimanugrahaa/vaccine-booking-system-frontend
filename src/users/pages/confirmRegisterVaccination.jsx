@@ -1,58 +1,111 @@
 import Header from "../components/header";
 import review_img from '../../assets/review-img.png'
+import { useLocation, useNavigate } from "react-router-dom";
+import { GetFaskesByID, GetVaksinByID, PostRequestVaksin } from "../../services/services";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 export default function ConfirmRegisterVaccination() {
+    const {state} = useLocation()
+    console.log(state)
+
+    const mySession = useSelector((state) => state.mySession.mySession)
+    const navigate = useNavigate()
     
+    const [vaccine, dataVaccine] = useState({})
+    const [faskes, faskesName] = useState("")
+    const getVaccineDetail = async() => {
+
+        if (state.status_satu === "belum" || state.status_satu === "expired" || state.status_satu === "") {
+            state.status_satu = "Terdaftar"
+            const value = await GetVaksinByID(state.vaksinID_satu)
+            dataVaccine(value.response)
+            const faskes = await GetFaskesByID(value.response.faskes_id)
+            faskesName(faskes?.response?.nama)
+        } else if (state.status_dua === "belum" || state.status_dua === "expired" || state.status_dua === "") {
+            state.status_satu = "Terdaftar"
+            const value = await GetVaksinByID(state.vaksinID_dua)
+            dataVaccine(value.response)
+            const faskes = await GetFaskesByID(value.response.faskes_id)
+            faskesName(faskes?.response?.nama)
+        }
+    }
+
+    const submitData = async() => {
+        // const value = await PostRequestVaksin(mySession, state)
+
+        let value
+
+        if (state.status_satu === "") {
+            value = await PostRequestVaksin(mySession, state)
+
+        } else if (state.status_satu === "belum" || state.status_satu === "expired") {
+            
+        } else if ( state.status_dua === "belum" || state.status_dua === "expired" || state.status_dua === "") {
+            
+        }
+
+        if (value.status === "success") {
+            navigate('/')
+        }
+    }
+
+    useEffect(() => {
+        getVaccineDetail()
+    },[])
+
+    console.log(state)
+
     return (
         <>
-        <Header/>
-        <div className='container-fluid'>
+        {/* <Header/> */}
+        <div className='col-md-7 my-auto mx-auto'>
             <div className='row'>
-                <div className='col-md-4 p-0'>
+                {/* <div className='col-md-4 p-0'>
                     <img src={review_img} className='img-fluid' alt="faskes-review" />
-                </div>
+                </div> */}
                 {/* <h5 className="text-center text-uppercase">Pendaftaran Vaksin</h5> */}
-                <div className="container-fluid p-2 col-md-6 mx-auto my-3">
+                <div className="container-fluid p-2 col-md-10 mx-auto my-3">
                     <h4 className="text-center text-uppercase fw-bold m-3">Pendaftaran Vaksin</h4>
                     <div className="card border-3 p-4">
                         <h5 className="text-uppercase fw-bold">Identitas Diri</h5>
                         <h6 className="mt-2">Nama Lengkap</h6>
-                        <p className="fw-bold">Andi Pratama</p>
+                        <p className="fw-bold">{state.nama}</p>
 
                         <h6 className="mt-2">NIK</h6>
-                        <p className="fw-bold">1234567890</p>
+                        <p className="fw-bold">{state.nik}</p>
 
                         <h6 className="mt-2">Jenis Kelamin</h6>
-                        <p className="fw-bold">Pria</p>
+                        <p className="fw-bold">{state.jeniskelamin}</p>
 
                         <h6 className="mt-2">Tanggal Lahir</h6>
-                        <p className="fw-bold">1 Januari 1998</p>
+                        <p className="fw-bold">{state.tanggallahir}</p>
 
                         <h6 className="mt-2">No. Handphone</h6>
-                        <p className="fw-bold">089981457699</p>
+                        <p className="fw-bold">{state.nomor}</p>
 
                         <h6 className="mt-2">Alamat</h6>
-                        <p className="fw-bold">Jl. Dukuh Blok 2B Swasembada Jakarta Utara</p>
+                        <p className="fw-bold">{`${state.alamat}, Kel. ${state.kelurahan}, Kec. ${state.kecamatan}, Kota ${state.kota}, Prov. ${state.provinsi}`}</p>
                     </div>
 
                     <div className="card border-3 p-4 mt-4">
                         <h5 className="text-uppercase fw-bold">Kategori</h5>
-                        <p className="fw-bold">Andi Pratama</p>
+                        <p className="fw-bold">{state.kategori}</p>
                     </div>
 
                     <div className="card border-3 p-4 mt-4">
                         <h5 className="text-uppercase fw-bold">Jadwal</h5>
                         <h6 className="mt-2">Tanggal</h6>
-                        <p className="fw-bold">Senin, 1 Juni 2021</p>
+                        <p className="fw-bold">{vaccine.jadwal}</p>
 
                         <h6 className="mt-2">Jam</h6>
-                        <p className="fw-bold">08.00 - 10.00</p>
+                        <p className="fw-bold">{vaccine.waktu}</p>
 
                         <h6 className="mt-2">Jenis Vaksin</h6>
-                        <p className="fw-bold">Sinovac</p>
+                        <p className="fw-bold">{vaccine.jenisvaksin}</p>
 
                         <h6 className="mt-2">Lokasi Faskes</h6>
-                        <p className="fw-bold">Rumah Sakit Ceria</p>
+                        <p className="fw-bold">{faskes}</p>
                     </div>
 
                     <div class="mb-3 form-check mt-4">
@@ -63,7 +116,7 @@ export default function ConfirmRegisterVaccination() {
                     </div>
 
                     <div className='text-center mt-5'>
-                        <button type="submit" class="btn btn-primary text-uppercase">Daftar</button>
+                        <button onClick={() => submitData()} type="button" class="btn btn-primary text-uppercase">Daftar</button>
                     </div>  
                 </div>                              
             </div>
