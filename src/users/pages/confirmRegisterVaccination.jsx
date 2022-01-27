@@ -21,7 +21,7 @@ export default function ConfirmRegisterVaccination() {
     const [faskes, faskesName] = useState("")
     const getVaccineDetail = async() => {
 
-        if (user.status_satu !== "Sudah Vaksin" || state.status_satu === "") {
+        if (user.status_satu !== "Sudah Vaksin" && state.status_satu === "") {
             state.status_satu = "Terdaftar"
             const value = await GetVaksinByID(state.vaksinID_satu)
             dataVaccine(value.response)
