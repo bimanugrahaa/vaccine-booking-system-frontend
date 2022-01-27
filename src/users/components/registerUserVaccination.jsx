@@ -2,11 +2,13 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import DatePicker from "react-modern-calendar-datepicker"
 import { Calendar } from '../../utils/calendar';
-import { useLocation, useNavigate } from "react-router-dom"
+import { useLocation, useNavigate, useOutletContext } from "react-router-dom"
 import { DateToString } from "../../utils/dateToString";
 
 export default function RegisterUserVaccination() {
+    
     const {state} = useLocation()
+    const { user } = useOutletContext()
     const navigate = useNavigate()
     const [data, setData] = useState(state)
     const [selectedDay, setSelectedDay] = useState("");
@@ -19,6 +21,7 @@ export default function RegisterUserVaccination() {
     const [kelurahan, getKelurahan] = useState([])
 
     console.log(data)
+    console.log("user register user", user)
 
     const convertData = () => {
 

@@ -6,17 +6,18 @@ const value = {
     response: "",
 }
 
-const VaccineStatus = async(e, user, token) => {
+const VaccineStatus = async(e, mySession, user) => {
 
-    e.preventDefault()
+    // e.preventDefault()
 
+    console.log(user)
     // axios.defaults.headers.common = {'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE2NDI4MTYwMjQsInVzZXJfaWQiOjl9.O0Nm801yGk-HuV5NuMu5B7rSwaPU7IVRYjG670TfE8g`}
     const config = {
         method: 'post',
         url: `${BASE_URL}/requestvaksin/login`,
         data : user,
         headers : {
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${mySession.token}`
         }
     };
 

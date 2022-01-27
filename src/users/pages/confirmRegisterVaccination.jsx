@@ -1,13 +1,18 @@
 import Header from "../components/header";
 import review_img from '../../assets/review-img.png'
-import { useLocation, useNavigate } from "react-router-dom";
-import { GetFaskesByID, GetVaksinByID, PostRequestVaksin } from "../../services/services";
+import { useLocation, useNavigate, useOutletContext } from "react-router-dom";
+import { EditRequestVaksinDua, EditRequestVaksinSatu, GetFaskesByID, GetVaksinByID, PostRequestVaksin } from "../../services/services";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 export default function ConfirmRegisterVaccination() {
     const {state} = useLocation()
     console.log(state)
+
+    const { user } = useOutletContext()
+
+    
+    console.log(user)
 
     const mySession = useSelector((state) => state.mySession.mySession)
     const navigate = useNavigate()
@@ -16,14 +21,14 @@ export default function ConfirmRegisterVaccination() {
     const [faskes, faskesName] = useState("")
     const getVaccineDetail = async() => {
 
-        if (state.status_satu === "belum" || state.status_satu === "expired" || state.status_satu === "") {
+        if (user.status_satu !== "Sudah Vaksin" || state.status_satu === "") {
             state.status_satu = "Terdaftar"
             const value = await GetVaksinByID(state.vaksinID_satu)
             dataVaccine(value.response)
             const faskes = await GetFaskesByID(value.response.faskes_id)
             faskesName(faskes?.response?.nama)
-        } else if (state.status_dua === "belum" || state.status_dua === "expired" || state.status_dua === "") {
-            state.status_satu = "Terdaftar"
+        } else if (user.status_dua !== "Tidak Vaksin") {
+            // state.status_dua = "Terdaftar"
             const value = await GetVaksinByID(state.vaksinID_dua)
             dataVaccine(value.response)
             const faskes = await GetFaskesByID(value.response.faskes_id)
@@ -31,18 +36,49 @@ export default function ConfirmRegisterVaccination() {
         }
     }
 
+    const updateState = () => {
+        state.nama = user.nama
+        state.nik = user.nik
+        state.jeniskelamin = user.jeniskelamin
+        state.tanggallahir = user.tanggallahir
+        state.nomor = user.nomor
+        state.alamat = user.alamat
+        state.kelurahan = user.kelurahan
+        state.kecamatan = user.kecamatan
+        state.kota = user.kota
+        state.provinsi = user.provinsi
+        
+    }
+
     const submitData = async() => {
         // const value = await PostRequestVaksin(mySession, state)
 
         let value
+        
 
-        if (state.status_satu === "") {
+        if (state.status_satu === "Terdaftar") {
+            // state.status_satu = "Terdaftar"
             value = await PostRequestVaksin(mySession, state)
+            console.log("baru", value)
+        } else if (user.status_satu === "Belum" || user.status_satu === "Expired") {
+            
+            const update = {
+                id: user.id,
+                vaksinID_satu: state.vaksinID_satu,
+                status_satu: "Terdaftar"
+            }
 
-        } else if (state.status_satu === "belum" || state.status_satu === "expired") {
+            value = await EditRequestVaksinSatu(mySession, update)
+            console.log("update satu", value)
+        } else if (user.status_dua === "Belum" || user.status_dua === "Expired" || user.status_dua === "") {
             
-        } else if ( state.status_dua === "belum" || state.status_dua === "expired" || state.status_dua === "") {
-            
+            const update = {
+                id: user.id,
+                vaksinID_dua: state.vaksinID_dua,
+                status_dua: "Terdaftar"
+            }
+            value = await EditRequestVaksinDua(mySession, update)
+            console.log("update dua", value)
         }
 
         if (value.status === "success") {
@@ -52,6 +88,7 @@ export default function ConfirmRegisterVaccination() {
 
     useEffect(() => {
         getVaccineDetail()
+        updateState()
     },[])
 
     console.log(state)

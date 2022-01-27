@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useOutletContext } from 'react-router-dom'
 import { GetAllFaskes, GetCountVaksin, GetFaskesByID, GetVaksinByID } from '../../services/services'
 
-export default function RegisterScheduleVaccination() {
+export default function RegisterScheduleVaccination(props) {
     const mySession = useSelector((state) => state.mySession.mySession)
 
+    const { user } = useOutletContext()
+
+    console.log("register schedule", user)
     const baseData = {
         kategori: "",
         nama: "",
@@ -32,6 +35,7 @@ export default function RegisterScheduleVaccination() {
     const [vaccine, getVaccine] = useState([])
     const [quota, setVaccineQuota] = useState(0)
     const [data, setData] = useState(baseData)
+    const [restQuota, setRestQuota] = useState(0)
 
     
 
@@ -53,10 +57,11 @@ export default function RegisterScheduleVaccination() {
 
     const GetVaccineTime = async () => {
         const value = await GetVaksinByID(vaccineID)
-
-        if (baseData.status_satu === "belum" || baseData.status_satu === "expired" || baseData.status_satu === "") {
+        // baseData.status_satu = user.status_satu
+        // baseData.status_dua = user.status_dua
+        if ((user.status_satu !== "Sudah Vaksin") && baseData.status_satu === "") {
             setData({...data, ["vaksinID_satu"]: parseInt(vaccineID)})
-        } else if (baseData.status_dua === "belum" || baseData.status_dua === "expired" || baseData.status_dua === "") {
+        } else if ((user.status_dua !== "Sudah Vaksin")) {
             setData({...data, ["vaksinID_dua"]: parseInt(vaccineID)})
         }
 
@@ -67,16 +72,18 @@ export default function RegisterScheduleVaccination() {
     }
 
     const GetQuota = async () => {
-        const value = await GetCountVaksin(vaccineID)
+        if (vaccineID !== 0) {
+            const value = await GetCountVaksin(vaccineID)
 
-        if (value.status === "success") {
-            setVaccineQuota(value.response)
+            if (value.status === "success") {
+                setVaccineQuota(value.response)
+            }
         }
+        
     }
 
     useEffect(() => {
         GetFaskes()
-        
     }, [])
 
     useEffect(() => {
@@ -87,9 +94,21 @@ export default function RegisterScheduleVaccination() {
     useEffect(() => {
         GetVaccineTime()
         GetQuota()
+        
     }, [vaccineID])
 
-    
+    useEffect(() => {
+        const min = vaccine.stokvaksin - quota.data
+        if (isNaN(min)) {
+            setRestQuota(0)
+        } else {
+            setRestQuota(min)
+        }
+        
+        
+    },[vaccine, quota])
+
+    console.log(user)
     return (
         <>
         <div className='col-md-5 my-auto mx-auto'>
@@ -98,7 +117,6 @@ export default function RegisterScheduleVaccination() {
                 <form>
                     <label htmlFor="kategori" className="form-label">Kategori</label>
                     <select onChange={(e) => {
-                        // setData(e.target[e.target.selectedIndex])
                         setData({...data, [e.target.name]: e.target.value})}}
                         name='kategori' className="form-select mb-4" aria-label=".form-select-sm example" required>
                         <option selected disabled>Pilih Kategori</option>
@@ -108,7 +126,6 @@ export default function RegisterScheduleVaccination() {
                     <label htmlFor="Lokasi" className="form-label">Lokasi</label>
                     <select onChange={(e) => {
                         setFaskesID(e.target[e.target.selectedIndex].dataset.id)
-                        // setDataFaskes({...dataFaskes, [e.target.name]: e.target.value})
                         }} 
                         name='Lokasi' className="form-select mb-4" aria-label=".form-select-sm example" required>
                         <option selected disabled>Pilih Lokasi Faskes</option>
@@ -119,7 +136,6 @@ export default function RegisterScheduleVaccination() {
                     <label htmlFor="Tanggal" className="form-label">Tanggal</label>
                     <select onChange={(e) => {
                         setVaccineID(e.target[e.target.selectedIndex].dataset.id)
-                        // setDataFaskes({...dataFaskes, [e.target.name]: e.target.value})
                         }} 
                         name='Tanggal' className="form-select mb-4" aria-label=".form-select-sm example" required>
                         <option selected disabled>Pilih Tanggal</option>
@@ -139,11 +155,20 @@ export default function RegisterScheduleVaccination() {
                         <option selected disabled>Pilih Jenis Vaksin</option>
                         <option data-id={vaccine?.id} key={vaccine?.id} value={vaccine?.jenisvaksin}>{vaccine?.jenisvaksin}</option>
                     </select>
-                    <p>Sisa kuota: {vaccine.stokvaksin - quota.data}</p>
+                    <p>Sisa kuota: {restQuota}</p>
                     <div className='text-center'>
-                        <Link to="/daftar-vaksin/two" state={data}>
+                        {user.status_satu === ""?
+                            <Link to="/daftar-vaksin/two" state={data}>
+                                <button type="button" class="btn btn-primary text-uppercase">Selanjutnya</button>
+                            </Link>
+                        :
+                            <Link to="/daftar-vaksin/konfirmasi" state={data}>
+                                <button type="button" class="btn btn-primary text-uppercase">Selanjutnya</button>
+                            </Link>
+                        }
+                        {/* <Link to="/daftar-vaksin/two" state={data}>
                             <button type="button" class="btn btn-primary text-uppercase">Selanjutnya</button>
-                        </Link>
+                        </Link> */}
                     </div>       
                 </form>   
             </div>

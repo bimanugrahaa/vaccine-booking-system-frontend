@@ -1,9 +1,6 @@
-import { useEffect, useState } from "react"
-import { useDispatch, useSelector } from 'react-redux';
-import { checkFamilyStatus } from '../../store/Data';
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useState } from "react"
+import { useNavigate } from "react-router-dom";
 import logo from "../../assets/Logo.png"
-import { VaccineStatus } from "../../services/services"
 import "../css/status.css"
 
 export default function ModalCheckStatus(props) {
@@ -24,7 +21,15 @@ export default function ModalCheckStatus(props) {
 
     const goCheckStatus = () => {
 
-        if (err === "") {
+        if (user.nama === "" || user.nik === "") {
+            setErr("Data tidak boleh kosong")
+        }
+
+        if (user.nama !== "" && user.nik !== "") {
+            setErr("")
+        }
+
+        if (user.nama !== "" && user.nik !== "") {
             navigate('/status', {state: user})
         }
         
@@ -36,7 +41,7 @@ export default function ModalCheckStatus(props) {
 
         if (name === "nik") {
             if (value === "") {
-                setErr("NIK tidak dapat kosong!")
+                setErr("NIK tidak boleh kosong")
             } else if (regexNumber.test(value)) {
                 setErr("")
             } else if (!regexNumber.test(value)) {
@@ -56,14 +61,14 @@ export default function ModalCheckStatus(props) {
                         <button onClick={() => props.setShow(false)} type="button" class="btn-close" aria-label="Close"></button>
                     </div>
                     <div class="modal-body p-5 pt-4">
-                            <div class="mb-1">
+                            <div class="mb-3 text-start">
                                 <label for="nama" class="form-label">Nama lengkap</label>
                                 <input name='nama' type="text" class="form-control" id="nama" 
                                     value={user.nama} onChange={(e) => setUser({...user, [e.target.name]: e.target.value})} placeholder="Nama lengkap sesuai KTP" aria-label="Name" />
                             </div>
-                            <div class="mb-1">
+                            <div class="mb-1 text-start">
                                 <label for="nik" class="form-label">NIK</label>
-                                <input name='nik' type="number" class="form-control" id="nik" 
+                                <input name='nik' type="text" class="form-control" id="nik" 
                                     value={user.nik} onChange={(e) => checkNIK(e)} placeholder="Masukan nik" aria-label="Number" />
                                     <small className="text-danger">{err}</small><br/>
                             </div>

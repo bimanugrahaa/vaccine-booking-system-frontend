@@ -7,7 +7,7 @@ export default function CardTicketTwo(props) {
         <div className="container-fluid mx-auto mb-3">
             <div className="card border-3 p-4">
                 <h6 className="text-uppercase">Status Vaksin</h6>
-                {status === "Sudah" || status === "Terdaftar"? 
+                {status === "Sudah Vaksin" || status === "Terdaftar"? 
                     <>
                     <h5 className="my-3 fw-bold text-success">Vaksin Kedua</h5>
                     </>

@@ -23,7 +23,7 @@ import SearchFaskes from './users/pages/searchFaskes';
 import FaskesReview from './users/pages/faskesReview';
 import AddFaskesReview from './users/pages/addFaskesReview';
 import CardStatusVaccine from './users/components/cardStatusVaccine';
-import CardVaccineSchedule from './users/components/cardVaccineSchedule';
+import CardVaccineScheduleFailed from './users/components/cardVaccineScheduleFailed';
 import StatusVaccine from './users/pages/statusVaccine';
 import RegisterVaccination from './users/pages/registerVaccination';
 import RegisterScheduleVaccination from './users/components/registerScheduleVaccination';
@@ -54,6 +54,12 @@ function App() {
                 <Route path="faskes" exact element={<SearchFaskes/>}/>
                 <Route path="status" exact element={<StatusVaccine/>}/>
                 {/* <Route path="konfirmasi" exact element={<ConfirmRegisterVaccination/>}/> */}
+                <Route path="/daftar-vaksin" element={<RegisterVaccination/>}>
+                  <Route path="one" element={<RegisterScheduleVaccination/>}/>
+                  <Route path="/daftar-vaksin" element={<Navigate to="/daftar-vaksin/one"/>}/>
+                  <Route path="two" element={<RegisterUserVaccination/>}/>
+                  <Route path="konfirmasi" element={<ConfirmRegisterVaccination/>}/>
+                </Route>
                 <Route path="sukses" exact element={<VaccinationRegistrationSuccess/>}/>
 
                 <Route path="/dashboard" exact element={<Dashboard/>}>
@@ -93,12 +99,7 @@ function App() {
                 
 
                 {/* Development */}
-                <Route path="/daftar-vaksin" element={<RegisterVaccination/>}>
-                  <Route path="one" element={<RegisterScheduleVaccination/>}/>
-                  <Route path="/daftar-vaksin" element={<Navigate to="/daftar-vaksin/one"/>}/>
-                  <Route path="two" element={<RegisterUserVaccination/>}/>
-                  <Route path="konfirmasi" element={<ConfirmRegisterVaccination/>}/>
-                </Route>
+                
               </Routes>
             </BrowserRouter>
           </PersistGate>
