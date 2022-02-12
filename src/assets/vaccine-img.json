@@ -1,0 +1,22 @@
+[
+    {
+        "id": 1,
+        "name": "Sinovac",
+        "url": "https://firebasestorage.googleapis.com/v0/b/mini-project-ecofriends.appspot.com/o/Vaccine%20booking%20system%2FSinovac.png?alt=media&token=69c354cb-633d-4d0b-bc56-413f33a63a6e"
+    },
+    {
+        "id": 2,
+        "name": "Astrazaneca",
+        "url": "https://firebasestorage.googleapis.com/v0/b/mini-project-ecofriends.appspot.com/o/Vaccine%20booking%20system%2FAstrazaneca.png?alt=media&token=1504f754-2bec-4f11-8c94-bc547649e362"
+    },
+    {
+        "id": 3,
+        "name": "Pfizer",
+        "url": "https://firebasestorage.googleapis.com/v0/b/mini-project-ecofriends.appspot.com/o/Vaccine%20booking%20system%2FPfizer.png?alt=media&token=2c96a576-e990-4852-92f8-4eed59868d8f"
+    },
+    {
+        "id": 4,
+        "name": "Moderna",
+        "url": "https://firebasestorage.googleapis.com/v0/b/mini-project-ecofriends.appspot.com/o/Vaccine%20booking%20system%2FModerna.png?alt=media&token=cf513f4d-aff7-4472-8e45-e4810240ddf3"
+    }
+]

@@ -1,0 +1,39 @@
+.side-img {
+    background: url(../../assets/vaccine-one.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 1080px;
+}
+
+@media only screen and (min-width: 993px) {
+    
+    .hidden {
+        display: none;
+    }
+
+}
+
+@media only screen and (max-width: 992px) {
+
+    .side-img {
+        display: none;
+    }
+
+}
+
+.primary-color {
+    background-color: #517DB5;
+}
+
+.text-black {
+    color: black;
+}
+
+.text-white {
+    color: white;
+}
+
+.font-signika {
+    font-family: Signika;
+}

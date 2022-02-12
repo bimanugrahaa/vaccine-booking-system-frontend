@@ -1,0 +1,19 @@
+.hero {
+    background: url(../../assets/landing-img.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 600px;
+}
+
+.hero-text {
+    text-shadow: 5px 0px 15px rgba(150, 150, 150, 1);
+}
+
+@media only screen and (max-width: 785px) {
+    .hero {
+        width: 100%;
+        height: 450px;
+    }
+
+}

@@ -1,0 +1,31 @@
+.home-img {
+    width: 500px;
+    height: auto;
+}
+
+.font-home {
+    font-size: 20px;
+}
+
+@media only screen and (max-width: 1050px) {
+
+    .font-home {
+        font-size: 16px;
+        text-align: justify;
+    }
+}
+
+@media only screen and (max-width: 900px) {
+
+    .font-home {
+        font-size: 14px;
+        text-align: justify;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .home-img {
+        display: none;
+    }
+
+}
